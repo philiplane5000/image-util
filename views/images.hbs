@@ -1,29 +1,70 @@
-{{!-- <div class="row">
-  <div class="jumbotron">
-    <h1 class="display-4">Hello, world!</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-    <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-  </div>
-</div> --}}
-<div class="row mt-5">
-  <div class="col">
-      <form action="/upload" method="post" enctype="multipart/form-data">
-        <label>&nbsp;Select image to upload:</label><br/>
-        <input
-          class="btn btn-secondary"
-          type="file"
-          name="masterImg"
-          id="masterImg"
-        />
-        <input
-          class="btn btn-primary"
-          type="submit"
-          value="Upload Image"
-          name="submit"
-        />
-      </form>      
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Image Upload Tool</h1>
+    {{!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> --}}
   </div>
 </div>
-  
+
+<div class="container-fluid mt-5 p-4" >
+  <form action="/upload" method="post" enctype="multipart/form-data">
+
+    <!-- Begins upload image section -->
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <label for="originalImg" class="heading-label">Upload Image (16:9)</label>
+      </div>
+      <div class="col-sm-12">
+        <input class="btn btn-secondary" type="file" name="originalImg" id="originalImg" />
+      </div>
+    </div>
+    <!-- Ends upload image section -->
+
+    <!-- Begins ipad/tablet image section -->
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <label class="heading-label">Dimensions for iPad/Tablet</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <label for="tabletWidth">Width</label>
+        <input type="text" class="form-control" id="tabletWidth" name="tabletWidth" placeholder="960">
+      </div>
+      <div class="col-sm-6">
+        <label for="tabletHeight">Height</label>
+        <input type="text" class="form-control" id="tabletHeight" name="tabletHeight" placeholder="540">
+      </div>
+    </div>
+    <!-- Ends ipad/tablet image section -->
+
+    <!-- Begins mobile image section -->
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <label class="heading-label">Dimensions for Mobile</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <label for="mobileWidth">Width</label>
+        <input type="text" class="form-control" id="mobileWidth" name="mobileWidth" placeholder="480">
+      </div>
+      <div class="col-sm-6">
+        <label for="mobileHeight">Height</label>
+        <input type="text" class="form-control" id="mobileHeight" name="mobileHeight" placeholder="270">
+      </div>
+    </div>
+    <!-- Ends mobile image section -->
+
+    {{!-- SUBMIT BUTTON --}}
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary mt-4" name="submit">
+          Upload Image
+        </button>
+      </div>
+    {{!-- SUBMIT BUTTON --}}
+    </div>
+  </form>
+</div>
+
+

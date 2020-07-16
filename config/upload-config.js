@@ -1,4 +1,5 @@
 const multer = require('multer');
+const { timestamp } = require('../utils/utils');
 // -------------------------------------------------------------------- //
 /* Multer Config: */
 // -------------------------------------------------------------------- //
@@ -9,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, './uploads/');
   },
   filename: function(req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, `${timestamp()}--${file.originalname}`);
   }
 })
 
