@@ -1,0 +1,29 @@
+{{!-- <div class="row">
+  <div class="jumbotron">
+    <h1 class="display-4">Hello, world!</h1>
+    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <hr class="my-4">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </div>
+</div> --}}
+<div class="row mt-5">
+  <div class="col">
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label>&nbsp;Select image to upload:</label><br/>
+        <input
+          class="btn btn-secondary"
+          type="file"
+          name="masterImg"
+          id="masterImg"
+        />
+        <input
+          class="btn btn-primary"
+          type="submit"
+          value="Upload Image"
+          name="submit"
+        />
+      </form>      
+  </div>
+</div>
+  
