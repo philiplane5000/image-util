@@ -6,54 +6,51 @@
 </div>
 
 <div class="container-fluid">
-  <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
-
-    <!-- Begins upload image section -->
+  <form id="sharp-form" action="/sharp" method="post" enctype="multipart/form-data">
+    <!-- Begins upload original image section -->
     <div class="form-group row">
       <div class="col-sm-12">
-        <label for="originalImg" class="heading-label">Upload Image (16:9)</label>
+        <label for="originalImg" class="heading-label">Original Image (16:9)</label>
       </div>
       <div class="col-sm-12">
         <input class="btn btn-info" type="file" name="originalImg" id="originalImg" />
       </div>
     </div>
-    <!-- Ends upload image section -->
-
+    <!-- Ends upload original image section -->
     <!-- Begins ipad/tablet image section -->
     <div class="form-group row">
       <div class="col-sm-12">
-        <label class="heading-label">Dimensions for iPad/Tablet</label>
+        <label class="heading-label">Dimensions for iPad/Tablet:</label>
       </div>
     </div>
     <div class="form-group row">
       <label for="tabletWidth" class="col-sm-2 col-form-label">Width</label>
-      <div class="col-sm-10">
+      <div class="col-sm-4">
         <input type="text" class="form-control" id="tabletWidth" name="tabletWidth" placeholder="960">
       </div>
     </div>
     <div class="form-group row">
       <label for="tabletHeight" class="col-sm-2 col-form-label">Height</label>
-      <div class="col-sm-10">
+      <div class="col-sm-4">
         <input type="text" class="form-control" id="tabletHeight" name="tabletHeight" placeholder="540">
       </div>
     </div>
     <!-- Ends ipad/tablet image section -->
-
     <!-- Begins mobile image section -->
     <div class="form-group row">
       <div class="col-sm-12">
-        <label class="heading-label">Dimensions for Mobile</label>
+        <label class="heading-label">Dimensions for Mobile:</label>
       </div>
     </div>
     <div class="form-group row">
       <label for="mobileWidth" class="col-sm-2 col-form-label">Width</label>
-      <div class="col-sm-10">
+      <div class="col-sm-4">
         <input type="text" class="form-control" id="mobileWidth" name="mobileWidth" placeholder="480">
       </div>
     </div>
     <div class="form-group row">
       <label for="mobileHeight" class="col-sm-2 col-form-label">Height</label>
-      <div class="col-sm-10">
+      <div class="col-sm-4">
         <input type="text" class="form-control" id="mobileHeight" name="mobileHeight" placeholder="270">
       </div>
     </div>
@@ -63,7 +60,7 @@
     <div class="form-group row">
       <div class="col-sm-12">
         <button type="submit" class="btn btn-info mt-4" name="submit">
-          Upload Image
+          Process Image
         </button>
       </div>
     {{!-- SUBMIT BUTTON --}}

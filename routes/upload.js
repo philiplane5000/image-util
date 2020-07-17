@@ -1,60 +1,42 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
-const upload = require("../config/upload-config");
-const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
-const { mimeToExt } = require("../utils/utils");
-
+const { uploadFileV2 } = require("../services/s3");
 // -------------------------------------------------------------------- //
-/* POST request inits image upload + processing */
+/* POST request to upload images to S3 bucket */
 // -------------------------------------------------------------------- //
-router.post("/", upload.single("originalImg"), async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    const { tabletWidth, tabletHeight, mobileWidth, mobileHeight } = req.body;
-    const { fieldname, originalname, encoding, mimetype, filename, size, destination } = req.file;
-    const tabletfilename = `${filename.slice(0,filename.length-4)}-${tabletWidth}x${tabletHeight}${mimeToExt[mimetype]}`;
-    const mobilefilename = `${filename.slice(0,filename.length-4)}-${mobileWidth}x${mobileHeight}${mimeToExt[mimetype]}`;
-    const tabletImagePath = path.resolve(destination, tabletfilename);
-    const mobileImagePath = path.resolve(destination, mobilefilename);
+    const imgsToUpload = req.body.Uploads;
     const promises = [];
 
-    promises.push(
-      sharp(req.file.path)
-        .resize(parseInt(tabletWidth, 10), parseInt(tabletHeight, 10))
-        .jpeg({ quality: 100})
-        .toFile(tabletImagePath)
-    );
-    
-    promises.push(
-      sharp(req.file.path)
-        .resize(parseInt(mobileWidth, 10), parseInt(mobileHeight, 10))
-        .jpeg({ quality: 100})
-        .toFile(mobileImagePath)
-    );
+    for (img of imgsToUpload) {
+      let { filename, format, size } = img;
+      
+      const pathToImg = path.format({
+        dir: "./uploads",
+        base: filename,
+      });
+      
+      promises.push(
+        uploadFileV2(process.env.AWS_BUCKET_NAME, pathToImg, filename)
+      );
+    }
 
     Promise.all(promises)
-      .then(images => {
-        images[0].filename = tabletfilename;
-        images[0].device = "tablet";
-        images[1].filename = mobilefilename;
-        images[1].device = "mobile";
-        // res.json(images);
-        res.render('preview', {images: images});
+      .then((metadata) => {
+        res.json(metadata);     
       })
-      .catch(err => {
-        console.error("Error processing files: ", err);
-        try {
-          fs.unlinkSync(tabletImagePath);
-          fs.unlinkSync(mobileImagePath);
-        } catch (e) {
-          console.log(e);
-        }
+      .catch((err) => {
+        throw new Error("Error upploading files");
       });
 
   } catch (err) {
     res.sendStatus(400);
   }
+
 });
 
 module.exports = router;
