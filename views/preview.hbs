@@ -1,0 +1,59 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Approval Page</h1>
+    {{!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> --}}
+  </div>
+</div>
+
+<div class="container-fluid mt-5 p-4" >
+  <div class="list-group">
+    <div class="row mb-2">
+    {{#each images}}
+        <div class="col-sm-6">
+            <a
+              href="/uploads/{{filename}}"
+              data-format="{{format}}"
+              data-width="{{width}}"
+              data-height="{{height}}"
+              data-size="{{size}}"
+              data-filename="{{filename}}"
+              class="list-group-item list-group-item-info list-group-item-action image-result-item"
+              style="text-transform: uppercase; font-size:20px;"
+              target="_blank"
+            >
+              {{device}} image
+            </a>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-light">
+                Filename: {{filename}}
+              </li>
+              <li class="list-group-item list-group-item-light">
+                Format: {{format}}
+              </li>
+              <li class="list-group-item list-group-item-light">
+                Width: {{width}}px
+              </li>
+              <li class="list-group-item list-group-item-light">
+                Height: {{height}}px
+              </li>
+              <li class="list-group-item list-group-item-light">
+                Size: {{size}}
+              </li>
+            </ul>
+
+            {{!-- <a href="#" class="list-group-item list-group-item-action active">Cras justo odio</a> --}}
+        </div>
+    {{/each}}
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div id="preview-image-dock">
+
+    </div>
+  </div>
+</div>
+
+

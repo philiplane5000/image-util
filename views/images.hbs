@@ -1,12 +1,12 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Image Upload Tool</h1>
+    <h1 class="display-4">Image Upload Utility</h1>
     {{!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> --}}
   </div>
 </div>
 
-<div class="container-fluid mt-5 p-4" >
-  <form action="/upload" method="post" enctype="multipart/form-data">
+<div class="container-fluid">
+  <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
 
     <!-- Begins upload image section -->
     <div class="form-group row">
@@ -14,7 +14,7 @@
         <label for="originalImg" class="heading-label">Upload Image (16:9)</label>
       </div>
       <div class="col-sm-12">
-        <input class="btn btn-secondary" type="file" name="originalImg" id="originalImg" />
+        <input class="btn btn-info" type="file" name="originalImg" id="originalImg" />
       </div>
     </div>
     <!-- Ends upload image section -->
@@ -26,12 +26,14 @@
       </div>
     </div>
     <div class="form-group row">
-      <div class="col-sm-6">
-        <label for="tabletWidth">Width</label>
+      <label for="tabletWidth" class="col-sm-2 col-form-label">Width</label>
+      <div class="col-sm-10">
         <input type="text" class="form-control" id="tabletWidth" name="tabletWidth" placeholder="960">
       </div>
-      <div class="col-sm-6">
-        <label for="tabletHeight">Height</label>
+    </div>
+    <div class="form-group row">
+      <label for="tabletHeight" class="col-sm-2 col-form-label">Height</label>
+      <div class="col-sm-10">
         <input type="text" class="form-control" id="tabletHeight" name="tabletHeight" placeholder="540">
       </div>
     </div>
@@ -44,12 +46,14 @@
       </div>
     </div>
     <div class="form-group row">
-      <div class="col-sm-6">
-        <label for="mobileWidth">Width</label>
+      <label for="mobileWidth" class="col-sm-2 col-form-label">Width</label>
+      <div class="col-sm-10">
         <input type="text" class="form-control" id="mobileWidth" name="mobileWidth" placeholder="480">
       </div>
-      <div class="col-sm-6">
-        <label for="mobileHeight">Height</label>
+    </div>
+    <div class="form-group row">
+      <label for="mobileHeight" class="col-sm-2 col-form-label">Height</label>
+      <div class="col-sm-10">
         <input type="text" class="form-control" id="mobileHeight" name="mobileHeight" placeholder="270">
       </div>
     </div>
@@ -58,7 +62,7 @@
     {{!-- SUBMIT BUTTON --}}
     <div class="form-group row">
       <div class="col-sm-12">
-        <button type="submit" class="btn btn-primary mt-4" name="submit">
+        <button type="submit" class="btn btn-info mt-4" name="submit">
           Upload Image
         </button>
       </div>

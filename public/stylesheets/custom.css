@@ -2,11 +2,18 @@ h1, h2, h3, h4, h5, h6 {
   background-image: none;
 }
 
-label {
-  /* text-transform: uppercase; */
+.global-header {
+  max-width: 1008px;
+  margin: 0 auto;
+}
+
+#upload-form {
+  padding: 32px;
+  background-color: #e9ecef;
+  border-radius: 5px;
 }
 
 .heading-label {
-  font-size: 20px;
-  margin-top: 16px;
+  font-size: 18px;
+  margin-top: 8px;
 }

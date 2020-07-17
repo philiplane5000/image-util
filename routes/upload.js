@@ -36,8 +36,11 @@ router.post("/", upload.single("originalImg"), async (req, res, next) => {
     Promise.all(promises)
       .then(images => {
         images[0].filename = tabletfilename;
+        images[0].device = "tablet";
         images[1].filename = mobilefilename;
-        res.json(images);
+        images[1].device = "mobile";
+        // res.json(images);
+        res.render('preview', {images: images});
       })
       .catch(err => {
         console.error("Error processing files: ", err);
