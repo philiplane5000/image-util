@@ -12,9 +12,8 @@
   </head>
   <body>
     <header class='global-header'>
-      <section class='top-bar d-md-block'>
-        <nav class='navbar navbar-expand-md'>
-          <a class='navbar-brand' href='https://www.gia.edu/home'>
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a class='navbar-brand mr-5' href='https://www.gia.edu/home'>
             <img
               src='/images/gia-logo.svg'
               alt='logo'
@@ -22,9 +21,24 @@
               height='55'
             />
           </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="/images">Uploader<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+              </li>
+            </ul>
+          </div>
+          <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>          
         </nav>
-      </section>
-      <hr class='solid-single d-md-block' />
     </header>
 
     <div class='container'>

@@ -23,15 +23,56 @@ $(document).ready(() => {
       data: JSON.stringify({ Uploads: uploads}),
       // dataType: 'json',
       contentType: 'application/json',
-      success: function (data) {
-        console.log('data: ', data)
-      },
+      success: renderMetadata,
       error: function (err) {
         console.log('err: ', err)
       }
       // context: document.body
     })
     // POST image metadata to /upload route via request body
+
+  }
+
+  let renderMetadata = (metadata) => {
+    $('#s3-results-section').removeClass('d-none');
+    for (data of metadata) {
+      const {Bucket, ETag, Key, Location, key} = data;
+
+      const $s3Data = $(`
+      <div class="col-sm-6">
+        <a 
+          href="${Location}"
+          data-bucket="${Bucket}"
+          data-etag="${ETag}"
+          data-location="${Location}"
+          data-key="${key}"
+          target="_blank"
+          class="list-group-item list-group-item-success list-group-item-action s3-result-item"
+          style="text-transform: uppercase; font-size:20px;"
+        >
+          Success:
+        </a>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-light">
+            ETag: ${ETag}
+          </li>
+          <li class="list-group-item list-group-item-light">
+            Bucket: ${Bucket}
+          </li>
+          <li class="list-group-item list-group-item-light">
+            key: ${key}
+          </li>
+          <li class="list-group-item list-group-item-light">
+            Location: ${Location}
+          </li>
+        </ul>
+      </div>
+      `)
+  
+      $('#s3-results-section').append($s3Data)
+      $('#upload-form').hide()
+    }
+
 
   }
 

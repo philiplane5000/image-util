@@ -1,20 +1,16 @@
-h1, h2, h3, h4, h5, h6 {
-  background-image: none;
-}
-
 .global-header {
   max-width: 1140px;
   margin: 0 auto;
-}
-
-#sharp-form, #upload-form {
-  padding: 32px;
-  background-color: #e9ecef;
-  border-radius: 5px;
 }
 
 .heading-label {
   text-transform: uppercase;
   font-size: 18px;
   margin-top: 8px;
+}
+
+#sharp-form, #upload-form {
+  padding: 32px;
+  background-color: #e9ecef;
+  border-radius: 5px;
 }
