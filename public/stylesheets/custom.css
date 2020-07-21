@@ -1,3 +1,5 @@
+/* global styles */
+/* ***begins***************** */
 .global-header {
   max-width: 1140px;
   margin: 0 auto;
@@ -8,9 +10,50 @@
   font-size: 18px;
   margin-top: 8px;
 }
+/* ***ends******************* */
 
+/* global forms styles */
+/* ***begins***************** */
 #sharp-form, #upload-form {
   padding: 32px;
   background-color: #e9ecef;
   border-radius: 5px;
 }
+/* ***ends******************* */
+
+/* 'upload-dashboard.hbs' styles */
+/* ***begins***************** */
+#sharp-results-section h2,
+#s3-results-section h2 {
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #FFF;
+  background-color: #365185;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.sharp-result-card a,
+.s3-result-card a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sharp-result-card img,
+.s3-result-card img {
+  width: 25pt;
+  height: 25pt;
+}
+
+.list-group-item-success {
+  color: #307985;
+  background-color: #B2EBD3;
+}
+
+.list-group-item-success.list-group-item-action:hover,
+.list-group-item-success.list-group-item-action:focus {
+  color: #307985;
+  background-color: #C2FFE6 !important;
+}
+/* ***ends******************* */

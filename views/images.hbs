@@ -17,50 +17,94 @@
       </div>
     </div>
     <!-- Ends upload original image section -->
-    <!-- Begins ipad/tablet image section -->
+
+    <!-- Begins Large MediaFile section -->
     <div class="form-group row">
       <div class="col-sm-12">
-        <label class="heading-label">Dimensions for iPad/Tablet:</label>
+        <label class="heading-label">Large Media-File:</label>
       </div>
     </div>
     <div class="form-group row">
-      <label for="tabletWidth" class="col-sm-2 col-form-label">Width</label>
+      <label for="lgMediaWidth" class="col-sm-2 col-form-label">Width</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="tabletWidth" name="tabletWidth" placeholder="960">
+        <input type="text" class="form-control" id="lgMediaWidth" name="lgMediaWidth" placeholder="1280">
       </div>
     </div>
     <div class="form-group row">
-      <label for="tabletHeight" class="col-sm-2 col-form-label">Height</label>
+      <label for="lgMediaHeight" class="col-sm-2 col-form-label">Height</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="tabletHeight" name="tabletHeight" placeholder="540">
+        <input type="text" class="form-control" id="lgMediaHeight" name="lgMediaHeight" placeholder="720">
       </div>
     </div>
-    <!-- Ends ipad/tablet image section -->
-    <!-- Begins mobile image section -->
+    <!-- Ends Large MediaFile section -->
+
+    <!-- Begins Medium MediaFile section -->
     <div class="form-group row">
       <div class="col-sm-12">
-        <label class="heading-label">Dimensions for Mobile:</label>
+        <label class="heading-label">Medium Media-File:</label>
       </div>
     </div>
     <div class="form-group row">
-      <label for="mobileWidth" class="col-sm-2 col-form-label">Width</label>
+      <label for="mdMediaWidth" class="col-sm-2 col-form-label">Width</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="mobileWidth" name="mobileWidth" placeholder="480">
+        <input type="text" class="form-control" id="mdMediaWidth" name="mdMediaWidth" placeholder="636">
       </div>
     </div>
     <div class="form-group row">
-      <label for="mobileHeight" class="col-sm-2 col-form-label">Height</label>
+      <label for="mdMediaHeight" class="col-sm-2 col-form-label">Height</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="mobileHeight" name="mobileHeight" placeholder="270">
+        <input type="text" class="form-control" id="mdMediaHeight" name="mdMediaHeight" placeholder="358">
       </div>
     </div>
-    <!-- Ends mobile image section -->
+    <!-- Ends Medium MediaFile section -->
+
+    <!-- Begins Small MediaFile section -->
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <label class="heading-label">Small Media-File:</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="smMediaWidth" class="col-sm-2 col-form-label">Width</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="smMediaWidth" name="smMediaWidth" placeholder="216">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="smMediaHeight" class="col-sm-2 col-form-label">Height</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="smMediaHeight" name="smMediaHeight" placeholder="122">
+      </div>
+    </div>
+    <!-- Ends Small MediaFile section -->
+
+    <!-- Begins Tiny MediaFile section -->
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <label class="heading-label">Tiny Media-File:</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="xsMediaWidth" class="col-sm-2 col-form-label">Width</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="xsMediaWidth" name="xsMediaWidth" placeholder="132">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="xsMediaHeight" class="col-sm-2 col-form-label">Height</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="xsMediaHeight" name="xsMediaHeight" placeholder="74">
+      </div>
+    </div>
+    <!-- Ends Tiny MediaFile section -->
+
+    {{!-- TODO: Tiny MediaFile: typically 132x74 --}}
 
     {{!-- SUBMIT BUTTON --}}
     <div class="form-group row">
       <div class="col-sm-12">
         <button type="submit" class="btn btn-info mt-4" name="submit">
-          Process Image
+          Process Image/(s)
         </button>
       </div>
     {{!-- SUBMIT BUTTON --}}

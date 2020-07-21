@@ -39,7 +39,7 @@ $(document).ready(() => {
       const {Bucket, ETag, Key, Location, key} = data;
 
       const $s3Data = $(`
-      <div class="col-sm-6">
+      <div class="col-sm-6 s3-result-card">
         <a 
           href="${Location}"
           data-bucket="${Bucket}"
@@ -50,7 +50,7 @@ $(document).ready(() => {
           class="list-group-item list-group-item-success list-group-item-action s3-result-item"
           style="text-transform: uppercase; font-size:20px;"
         >
-          Success:
+          Success: <img src="/icons/box-arrow-up-right.svg" alt="external-link">
         </a>
         <ul class="list-group">
           <li class="list-group-item list-group-item-light">
@@ -76,14 +76,14 @@ $(document).ready(() => {
 
   }
 
-  // potentially use these valuse later to display image preview
-  $('.image-result-item').on('click', (e) => {
-    console.log('format:', e.target.getAttribute('data-format'));
-    console.log('width:', e.target.getAttribute('data-width'));
-    console.log('height:', e.target.getAttribute('data-height'));
-    console.log('size:', e.target.getAttribute('data-size'));
-    console.log('filename:', e.target.getAttribute('data-filename'));
-  })
+  // potentially later use of below vals to display image preview:
+  // $('.image-result-item').on('click', (e) => {
+  //   console.log('format:', e.target.getAttribute('data-format'));
+  //   console.log('width:', e.target.getAttribute('data-width'));
+  //   console.log('height:', e.target.getAttribute('data-height'));
+  //   console.log('size:', e.target.getAttribute('data-size'));
+  //   console.log('filename:', e.target.getAttribute('data-filename'));
+  // })
 
   $('#upload-form').bind('submit', uploadToS3);
 

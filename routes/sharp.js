@@ -11,26 +11,45 @@ const { mimeToExt } = require("../utils/utils");
 // -------------------------------------------------------------------- //
 router.post("/", upload.single("originalImg"), async (req, res, next) => {
   try {
-    const { tabletWidth, tabletHeight, mobileWidth, mobileHeight } = req.body;
+    const { lgMediaWidth, lgMediaHeight, mdMediaWidth, mdMediaHeight, smMediaWidth, smMediaHeight, xsMediaWidth, xsMediaHeight } = req.body;
     const { fieldname, originalname, encoding, mimetype, filename, size, destination } = req.file;
-    const tabletfilename = `${filename.slice(0,filename.length-4)}-${tabletWidth}x${tabletHeight}${mimeToExt[mimetype]}`;
-    const mobilefilename = `${filename.slice(0,filename.length-4)}-${mobileWidth}x${mobileHeight}${mimeToExt[mimetype]}`;
-    const tabletImagePath = path.resolve(destination, tabletfilename);
-    const mobileImagePath = path.resolve(destination, mobilefilename);
+    // TODO: Convert below to utils function generateFileName(filename, dimensions = {width: -, height: -,})
+    const lgMediaFileName = `${filename.slice(0,filename.length-4)}-${lgMediaWidth}x${lgMediaHeight}${mimeToExt[mimetype]}`;
+    const mdMediaFileName = `${filename.slice(0,filename.length-4)}-${mdMediaWidth}x${mdMediaHeight}${mimeToExt[mimetype]}`;
+    const smMediaFileName = `${filename.slice(0,filename.length-4)}-${smMediaWidth}x${smMediaHeight}${mimeToExt[mimetype]}`;
+    const xsMediaFileName = `${filename.slice(0,filename.length-4)}-${xsMediaWidth}x${xsMediaHeight}${mimeToExt[mimetype]}`;
+    const lgMediaPath = path.resolve(destination, lgMediaFileName);
+    const mdMediaPath = path.resolve(destination, mdMediaFileName);
+    const smMediaPath = path.resolve(destination, smMediaFileName);
+    const xsMediaPath = path.resolve(destination, xsMediaFileName);
     const promises = [];
 
     promises.push(
       sharp(req.file.path)
-        .resize(parseInt(tabletWidth, 10), parseInt(tabletHeight, 10))
+        .resize(parseInt(lgMediaWidth, 10), parseInt(lgMediaHeight, 10))
         .jpeg({ quality: 100})
-        .toFile(tabletImagePath)
+        .toFile(lgMediaPath)
     );
 
     promises.push(
       sharp(req.file.path)
-        .resize(parseInt(mobileWidth, 10), parseInt(mobileHeight, 10))
+        .resize(parseInt(mdMediaWidth, 10), parseInt(mdMediaHeight, 10))
         .jpeg({ quality: 100})
-        .toFile(mobileImagePath)
+        .toFile(mdMediaPath)
+    );
+
+    promises.push(
+      sharp(req.file.path)
+        .resize(parseInt(smMediaWidth, 10), parseInt(smMediaHeight, 10))
+        .jpeg({ quality: 100})
+        .toFile(smMediaPath)
+    );
+
+    promises.push(
+      sharp(req.file.path)
+        .resize(parseInt(xsMediaWidth, 10), parseInt(xsMediaHeight, 10))
+        .jpeg({ quality: 100})
+        .toFile(xsMediaPath)
     );
 
     /* The default behaviour, when .withMetadata() is not used, is to convert  */
@@ -39,18 +58,24 @@ router.post("/", upload.single("originalImg"), async (req, res, next) => {
       
     Promise.all(promises)
       .then(images => {
-        images[0].filename = tabletfilename;
-        images[0].device = "tablet";
-        images[1].filename = mobilefilename;
-        images[1].device = "mobile";
+        images[0].filename = lgMediaFileName;
+        images[0].device = "large";
+        images[1].filename = mdMediaFileName;
+        images[1].device = "medium";
+        images[2].filename = smMediaFileName;
+        images[2].device = "small";
+        images[3].filename = xsMediaFileName;
+        images[3].device = "tiny";
         // res.json(images);
         res.render('upload-dashboard', {images: images});
       })
       .catch(err => {
         console.error("Error processing files: ", err);
         try {
-          fs.unlinkSync(tabletImagePath);
-          fs.unlinkSync(mobileImagePath);
+          fs.unlinkSync(lgMediaPath);
+          fs.unlinkSync(mdMediaPath);
+          fs.unlinkSync(smMediaPath);
+          fs.unlinkSync(xsMediaPath);
         } catch (e) {
           console.log(e);
         }
