@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const fs = require("fs");
-const { uploadFileV2 } = require("../services/s3");
+const { uploadFile } = require("../services/s3");
 // -------------------------------------------------------------------- //
 /* POST request to upload images to S3 bucket */
 // -------------------------------------------------------------------- //
@@ -21,7 +21,7 @@ router.post("/", async (req, res, next) => {
       });
       
       promises.push(
-        uploadFileV2(process.env.AWS_BUCKET_NAME, pathToImg, filename)
+        uploadFile(process.env.AWS_BUCKET_NAME, pathToImg, filename)
       );
     }
 

@@ -23,33 +23,7 @@ module.exports = {
     });
   },
 
-  uploadFile: async (bucketName, sourcePath, s3DestinationPath = '', cb = () => {}) => {
-    const file = path.resolve(sourcePath);
-    // call S3 to retrieve upload file to specified bucket
-    const uploadParams = {
-      Bucket: bucketName,
-      Key: s3DestinationPath || path.basename(file),
-      Body: ''
-    };
-
-    // Configure the file stream and obtain the upload parameters
-    const fileStream = fs.createReadStream(file);
-    fileStream.on('error', (err) => console.log('File Stream Error', err));
-    uploadParams.Body = fileStream;
-    // uploadParams.Key = path.basename(file);
-
-    // call S3 to retrieve upload file to specified bucket
-    s3.upload(uploadParams, function (err, data) {
-      if (err) console.log('[S3] Upload Error', err);
-
-      if (data) {
-        console.log('[S3] Upload file to:', data.Location);
-        cb(data);
-      }
-    });
-  },
-
-  uploadFileV2: (bucketName, sourcePath, s3DestinationPath) => new Promise((resolve,reject) => {
+  uploadFile: (bucketName, sourcePath, s3DestinationPath) => new Promise((resolve,reject) => {
     const file = path.resolve(sourcePath);
     // call S3 to retrieve upload file to specified bucket
     const uploadParams = {
