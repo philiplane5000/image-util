@@ -40,7 +40,7 @@ router.post("/", upload.single("originalImg"), async (req, res, next) => {
         images[1].filename = mobilefilename;
         images[1].device = "mobile";
         // res.json(images);
-        res.render('dashboard', {images: images});
+        res.render('upload-dashboard', {images: images});
       })
       .catch(err => {
         console.error("Error processing files: ", err);
