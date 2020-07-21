@@ -25,7 +25,7 @@ router.post("/", upload.single("originalImg"), async (req, res, next) => {
         .jpeg({ quality: 100})
         .toFile(tabletImagePath)
     );
-    
+
     promises.push(
       sharp(req.file.path)
         .resize(parseInt(mobileWidth, 10), parseInt(mobileHeight, 10))
@@ -33,6 +33,10 @@ router.post("/", upload.single("originalImg"), async (req, res, next) => {
         .toFile(mobileImagePath)
     );
 
+    /* The default behaviour, when .withMetadata() is not used, is to convert  */
+    /* to the device-independent sRGB colour space and strip all metadata,     */
+    /* including the removal of any ICC profile.                               */
+      
     Promise.all(promises)
       .then(images => {
         images[0].filename = tabletfilename;
