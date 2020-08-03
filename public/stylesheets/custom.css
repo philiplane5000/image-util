@@ -5,10 +5,14 @@
   margin: 0 auto;
 }
 
+.jumbotron, #sharp-form, #upload-form {
+  background-color: #F0f5f5;
+}
+
 .heading-label {
   text-transform: uppercase;
   font-size: 18px;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 /* ***ends******************* */
 
@@ -16,7 +20,6 @@
 /* ***begins***************** */
 #sharp-form, #upload-form {
   padding: 32px;
-  background-color: #e9ecef;
   border-radius: 5px;
 }
 /* ***ends******************* */

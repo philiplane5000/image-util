@@ -17,8 +17,7 @@
       </div>
     </div>
     <!-- Ends upload original image section -->
-    <!-- Begins Default Settings Checkbox section -->
-
+    <!-- Begins Aspect Ratio section -->
     <div class="form-group row">
       <div class="col-sm-12">
         <label class="heading-label">Lock Aspect Ratio</label>
@@ -52,8 +51,24 @@
 
       </div>
     </div>
+    <!-- Ends Aspect Ratio section -->
 
-    <!-- Ends Default Settings Checkbox section -->
+    {{!-- Begins 'fit' selection --}}
+    <div class="form-group row">
+      <div class="col-sm-2">
+        <label class="heading-label" for="imageFit">Fit</label>
+      </div>
+      <div class="col-sm-10">
+        <select class="form-control" id="imageFit" name="imageFit">
+          <option>Cover</option>
+          <option>Contain</option>
+          <option>Fill</option>
+          <option>Inside</option>
+          <option>Outside</option>
+        </select>
+      </div>
+    </div>
+    {{!-- Ends 'fit' selection --}}
 
     <!-- Begins Large MediaFile section -->
     <div class="form-group row">
@@ -128,6 +143,7 @@
     <!-- Ends Tiny MediaFile section -->
 
     {{!-- TODO: Tiny MediaFile: typically 132x74 --}}
+
 
     {{!-- SUBMIT BUTTON --}}
     <div class="form-group row">

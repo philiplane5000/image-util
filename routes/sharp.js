@@ -11,7 +11,7 @@ const { mimeToExt } = require("../utils/utils");
 // -------------------------------------------------------------------- //
 router.post("/", upload.single("originalImg"), async (req, res, next) => {
   try {
-    const { lgMediaWidth, lgMediaHeight, mdMediaWidth, mdMediaHeight, smMediaWidth, smMediaHeight, xsMediaWidth, xsMediaHeight } = req.body;
+    const { lgMediaWidth, lgMediaHeight, mdMediaWidth, mdMediaHeight, smMediaWidth, smMediaHeight, xsMediaWidth, xsMediaHeight, imageFit } = req.body;
     const { fieldname, originalname, encoding, mimetype, filename, size, destination } = req.file;
     // TODO: Convert below to utils function generateFileName(filename, dimensions = {width: -, height: -,})
     const lgMediaFileName = `${filename.slice(0,filename.length-4)}-${lgMediaWidth}x${lgMediaHeight}${mimeToExt[mimetype]}`;
@@ -26,28 +26,28 @@ router.post("/", upload.single("originalImg"), async (req, res, next) => {
 
     promises.push(
       sharp(req.file.path)
-        .resize(parseInt(lgMediaWidth, 10), parseInt(lgMediaHeight, 10))
+        .resize(parseInt(lgMediaWidth, 10), parseInt(lgMediaHeight, 10), { fit: imageFit.toLowerCase() })
         .jpeg({ quality: 100})
         .toFile(lgMediaPath)
     );
 
     promises.push(
       sharp(req.file.path)
-        .resize(parseInt(mdMediaWidth, 10), parseInt(mdMediaHeight, 10))
+        .resize(parseInt(mdMediaWidth, 10), parseInt(mdMediaHeight, 10), { fit: imageFit.toLowerCase() })
         .jpeg({ quality: 100})
         .toFile(mdMediaPath)
     );
 
     promises.push(
       sharp(req.file.path)
-        .resize(parseInt(smMediaWidth, 10), parseInt(smMediaHeight, 10))
+        .resize(parseInt(smMediaWidth, 10), parseInt(smMediaHeight, 10), { fit: imageFit.toLowerCase() })
         .jpeg({ quality: 100})
         .toFile(smMediaPath)
     );
 
     promises.push(
       sharp(req.file.path)
-        .resize(parseInt(xsMediaWidth, 10), parseInt(xsMediaHeight, 10))
+        .resize(parseInt(xsMediaWidth, 10), parseInt(xsMediaHeight, 10), { fit: imageFit.toLowerCase() })
         .jpeg({ quality: 100})
         .toFile(xsMediaPath)
     );
