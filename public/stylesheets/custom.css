@@ -5,7 +5,7 @@
   margin: 0 auto;
 }
 
-.jumbotron, #sharp-form, #upload-form {
+.jumbotron, form{
   background-color: #F0f5f5;
 }
 
