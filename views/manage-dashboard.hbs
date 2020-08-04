@@ -1,0 +1,30 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{ title }}</h1>
+    {{!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> --}}
+  </div>
+</div>
+
+<div class="container-fluid">
+  <form id="manage-form" class="mt-4" name="manage-form">
+    {{!-- SUBMIT BUTTON --}}
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Prefix</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Prefix" aria-describedby="inputGroup-sizing-sm">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-info mt-4" name="submit">
+          List
+        </button>
+      </div>
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+  </form>
+</div>

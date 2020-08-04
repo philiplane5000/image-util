@@ -18,7 +18,7 @@
 
 /* global forms styles */
 /* ***begins***************** */
-#sharp-form, #upload-form {
+#sharp-form, #upload-form, #manage-form {
   padding: 32px;
   border-radius: 5px;
 }
