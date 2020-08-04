@@ -38,4 +38,12 @@ router.get("/list", async (req, res, next) => {
 
 });
 
+router.get("/object", async (req, res, next) => {
+  try {
+    res.json({INDEV: true})
+  } catch (err) {
+    res.sendStatus(400);
+  }
+})
+
 module.exports = router;
