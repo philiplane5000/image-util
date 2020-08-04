@@ -57,7 +57,7 @@ $(document).ready(() => {
     console.log('uploads: ', JSON.stringify(uploads));
 
     $.ajax({
-      url: "/upload",
+      url: "/upload/s3",
       type: "POST",
       data: JSON.stringify({ Uploads: uploads}),
       // dataType: 'json',
@@ -116,6 +116,7 @@ $(document).ready(() => {
   }
   // ***ends*********** UPLOAD DATA FUNCTIONALITY ********************* //
 
+  // assign aspect ratio lock event listeners
   $('[name="aspect-lock"]').change(function (e) {
     if ($(this).is(":checked")) {
       if ($(this).val() !== "0") {
@@ -128,12 +129,13 @@ $(document).ready(() => {
   });
 
   // re-enable all disabled height inputs frozen
-  $('#sharp-form').submit(function(e) {
+  $('#sharp-form').bind('submit', function(e) {
     $(':disabled').each(function(e) {
         $(this).removeAttr('disabled');
     })
-  });
+  })
 
+  // upload resized images to S3 bucket
   $('#upload-form').bind('submit', uploadToS3);
 
 });
