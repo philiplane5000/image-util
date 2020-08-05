@@ -30,7 +30,14 @@
 </div>
 
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex justify-content-center">
+        <img id="loader-gif" class="img-fluid d-none mt-2" src="https://media.giphy.com/media/MDrmyLuEV8XFOe7lU6/giphy.gif" alt="loader-gif">
+      </div>
+    </div>
+  </div>
   <div class="row s3-result-cards">
-    {{!-- Populated with "result-cards" from S3 --}}
+    {{!-- Populated with "result-cards" from S3 bucket matching 'Prefix' value passed above --}}
   </div>
 </div>

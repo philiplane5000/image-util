@@ -13,13 +13,9 @@ const s3 = new AWS.S3({
 // -------------------------------------------------------------------- //
 /* GET request to list objects in S3 bucket */
 // -------------------------------------------------------------------- //
-router.get("/list", async (req, res, next) => {
+router.get("/list/:prefix", async (req, res, next) => {
   try {
-    console.log('-------------body---------------')
-    console.log(req.query)
-    console.log('--------------------------------')
-    const { prefix } = req.query;
-    // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
+    const { prefix } = req.params;
     var params = {
       Bucket: process.env.AWS_BUCKET_NAME, 
       MaxKeys: 100,
@@ -42,6 +38,27 @@ router.get("/list", async (req, res, next) => {
 router.get("/object", async (req, res, next) => {
   try {
     res.json({INDEV: true})
+  } catch (err) {
+    res.sendStatus(400);
+  }
+})
+
+router.delete("/object/:key", async (req, res, next) => {
+  try {
+    const { key } = req.params;
+    console.log('key: ', key);
+    var params = {
+      Bucket: process.env.AWS_BUCKET_NAME, 
+      Key: key
+    };
+    s3.deleteObject(params, function(err, data) {
+      if (err) {
+        console.log(err, err.stack); // an error occurred
+      } else {
+        console.log(data);
+        res.json(data);
+      }
+    });    
   } catch (err) {
     res.sendStatus(400);
   }

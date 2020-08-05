@@ -99,7 +99,7 @@ $(document).ready(() => {
             Bucket: ${Bucket}
           </li>
           <li class="list-group-item list-group-item-light">
-            key: ${key}
+            Key: ${key}
           </li>
           <li class="list-group-item list-group-item-light">
             Location: ${Location}
@@ -118,12 +118,13 @@ $(document).ready(() => {
 
   // ***begins********* MANAGE-S3 FUNCTIONALITY *********************** //
   let renderObjects = (data) => {
+    $('#loader-gif').addClass('d-none');
     data.Contents.forEach(obj => {
       let { Key, LastModified, ETag, Size, StorageClass } = obj;
       let imgSrc = `https://image-upload-util.s3.us-west-1.amazonaws.com/${Key}`;
   
       let card = `
-        <div class="col-sm-3">
+        <div class="col-sm-3 mb-3 mt-3">
           <div class="card">
             <img class="card-img-top" src="${imgSrc}" alt="${Key}">
             <ul class="list-group list-group-flush">
@@ -148,16 +149,35 @@ $(document).ready(() => {
   
   let listObjectsS3 = (e) => {
     e.preventDefault();
+
     let prefix = $('[name="prefix"]').val();
-  
+    $('.s3-result-cards').html('');
+    $('#loader-gif').removeClass('d-none');
+
     $.ajax({
-      url: `/api/list?prefix=${prefix}`,
+      url: `/api/list/${prefix}`,
       type: "GET",
       success: renderObjects,
       error: function (err) {
         console.log('err: ', err)
       }      
     })
+  }
+
+  let deleteObjectS3 = (e) => {
+    e.preventDefault();
+    let key = $(e.target).data('key');
+    $.ajax({
+      url: `/api/object/${key}`,
+      type: "DELETE",
+      success: function(data) {
+        // TODO: maybe add some kind of overlay instead of removing card entirely
+        $(e.target).closest('.card').remove()
+      },
+      error: function (err) {
+        alert('ERROR: ', err);
+      }      
+    })    
   }
   // ***end************ MANAGE-S3 FUNCTIONALITY *********************** //
 
@@ -186,12 +206,7 @@ $(document).ready(() => {
   // BIND S3 listObjects method and render results on success
   $("#manage-form").bind('submit', listObjectsS3)
 
-  // DELETE image (INDEV)
-  $('.s3-result-cards').on('click', '.card-link-delete', (e) => {
-    e.preventDefault();
-    let data = { Key: $(e.target).data('key'), ETag: $(e.target).data('tag')};
-    console.log('data: ', data);
-    // .ajax() call to pass data for this image to a delete route (INDEV)
-  })
+  // DELETE object/image from S3 bucket
+  $('.s3-result-cards').on('click', '.card-link-delete', deleteObjectS3)
 
 });
