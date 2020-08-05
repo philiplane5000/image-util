@@ -116,7 +116,52 @@ $(document).ready(() => {
   }
   // ***ends*********** UPLOAD DATA FUNCTIONALITY ********************* //
 
-  // assign aspect ratio lock event listeners
+  // ***begins********* MANAGE-S3 FUNCTIONALITY *********************** //
+  let renderObjects = (data) => {
+    data.Contents.forEach(obj => {
+      let { Key, LastModified, ETag, Size, StorageClass } = obj;
+      let imgSrc = `https://image-upload-util.s3.us-west-1.amazonaws.com/${Key}`;
+  
+      let card = `
+        <div class="col-sm-3">
+          <div class="card">
+            <img class="card-img-top" src="${imgSrc}" alt="${Key}">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>Key:</strong> ${Key}</li>
+              <li class="list-group-item"><strong>Size:</strong> ${Size}</li>
+              <li class="list-group-item"><strong>LastModified:</strong> ${LastModified}</li>
+              <li class="list-group-item"><strong>StorageClass:</strong> ${StorageClass}</li>
+              <!-- <li class="list-group-item"><strong>ETag:<strong> ${ETag}</li> -->
+            </ul>
+            <div class="card-body d-flex justify-content-between align-items-center">
+            <a href="${imgSrc}" class="card-link">Download</a>
+            <a href="#" class="card-link card-link-delete" data-key="${Key}" data-tag=${ETag}>Delete</a>
+            </div>
+          </div>
+        </div>
+      `
+  
+      $('.s3-result-cards').append(card);
+  
+    })
+  }
+  
+  let listObjectsS3 = (e) => {
+    e.preventDefault();
+    let prefix = $('[name="prefix"]').val();
+  
+    $.ajax({
+      url: `/api/list?prefix=${prefix}`,
+      type: "GET",
+      success: renderObjects,
+      error: function (err) {
+        console.log('err: ', err)
+      }      
+    })
+  }
+  // ***end************ MANAGE-S3 FUNCTIONALITY *********************** //
+
+  // ASSIGN aspect ratio lock event listeners
   $('[name="aspect-lock"]').change(function (e) {
     if ($(this).is(":checked")) {
       if ($(this).val() !== "0") {
@@ -128,14 +173,25 @@ $(document).ready(() => {
     }
   });
 
-  // re-enable all disabled height inputs frozen
+  // RE-ENABLE all disabled height inputs frozen
   $('#sharp-form').bind('submit', function(e) {
     $(':disabled').each(function(e) {
         $(this).removeAttr('disabled');
     })
   })
 
-  // upload resized images to S3 bucket
+  // UPLOAD resized images to S3 bucket
   $('#upload-form').bind('submit', uploadToS3);
+
+  // BIND S3 listObjects method and render results on success
+  $("#manage-form").bind('submit', listObjectsS3)
+
+  // DELETE image (INDEV)
+  $('.s3-result-cards').on('click', '.card-link-delete', (e) => {
+    e.preventDefault();
+    let data = { Key: $(e.target).data('key'), ETag: $(e.target).data('tag')};
+    console.log('data: ', data);
+    // .ajax() call to pass data for this image to a delete route (INDEV)
+  })
 
 });

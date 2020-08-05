@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const baseRouter = require('./routes/index');
-// const sharpRouter = require('./routes/sharp');
 const uploadRouter = require('./routes/upload');
 const apiRouter = require('./routes/api');
 
@@ -24,7 +23,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/', baseRouter);
 app.use('/upload', uploadRouter);
-// app.use('/sharp', sharpRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler

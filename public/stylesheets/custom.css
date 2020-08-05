@@ -1,5 +1,5 @@
 /* global styles */
-/* ***begins***************** */
+/* ***begins******************** */
 .global-header {
   max-width: 1140px;
   margin: 0 auto;
@@ -12,20 +12,21 @@
 .heading-label {
   text-transform: uppercase;
   font-size: 18px;
+  padding-left: 2px;
   /* margin-top: 8px; */
 }
-/* ***ends******************* */
+/* ***ends********************** */
 
 /* global forms styles */
-/* ***begins***************** */
+/* ***begins******************** */
 #sharp-form, #upload-form, #manage-form {
   padding: 32px;
   border-radius: 5px;
 }
-/* ***ends******************* */
+/* ***ends********************** */
 
 /* 'upload-dashboard.hbs' styles */
-/* ***begins***************** */
+/* ***begins******************** */
 #sharp-results-section h2,
 #s3-results-section h2 {
   font-weight: 300;
@@ -59,4 +60,11 @@
   color: #307985;
   background-color: #C2FFE6 !important;
 }
-/* ***ends******************* */
+/* ***ends********************** */
+
+/* 'manage-dashboard.hbs' styles */
+/* ***begins******************** */
+a.card-link-delete {
+  color: #dc3545;
+}
+/* ***ends********************** */

@@ -15,14 +15,15 @@ const s3 = new AWS.S3({
 // -------------------------------------------------------------------- //
 router.get("/list", async (req, res, next) => {
   try {
-    console.log('---------------------------')
+    console.log('-------------body---------------')
     console.log(req.query)
-    console.log('---------------------------')
+    console.log('--------------------------------')
+    const { prefix } = req.query;
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
     var params = {
       Bucket: process.env.AWS_BUCKET_NAME, 
       MaxKeys: 100,
-      Prefix: req.query.year ? req.query.year : ''
+      Prefix: prefix
      };
      s3.listObjectsV2(params, function(err, data) {
        if (err) {

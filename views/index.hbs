@@ -55,10 +55,10 @@
 
     {{!-- Begins 'fit' selection --}}
     <div class="form-group row">
-      <div class="col-sm-2">
-        <label class="heading-label" for="imageFit">Fit</label>
+      <div class="col-sm-1">
+        <label class="heading-label" for="imageFit">Fit:</label>
       </div>
-      <div class="col-sm-10">
+      <div class="col-sm-5">
         <select class="form-control" id="imageFit" name="imageFit">
           <option>Cover</option>
           <option>Contain</option>
@@ -77,13 +77,21 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="lgMediaWidth" class="col-sm-2 col-form-label">Width</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="lgMediaWidth" name="lgMediaWidth" placeholder="1280">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Width</span>
+          </div>
+          <input type="text" class="form-control" id="lgMediaWidth" name="lgMediaWidth" placeholder="1280" aria-label="Width" aria-describedby="inputGroup-sizing-default">
+        </div>
       </div>
-      <label for="lgMediaHeight" class="col-sm-2 col-form-label">Height</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="lgMediaHeight" name="lgMediaHeight" placeholder="720">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Height</span>
+          </div>
+          <input type="text" class="form-control" id="lgMediaHeight" name="lgMediaHeight" placeholder="720" aria-label="Height" aria-describedby="inputGroup-sizing-default">
+        </div>
       </div>
     </div>
     <!-- Ends Large MediaFile section -->
@@ -95,6 +103,25 @@
       </div>
     </div>
     <div class="form-group row">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Width</span>
+          </div>
+          <input type="text" class="form-control" id="mdMediaWidth" name="mdMediaWidth" placeholder="636" aria-label="Width" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Height</span>
+          </div>
+          <input type="text" class="form-control" id="mdMediaHeight" name="mdMediaHeight" placeholder="358" aria-label="Height" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+    </div>
+
+    {{!-- <div class="form-group row">
       <label for="mdMediaWidth" class="col-sm-2 col-form-label">Width</label>
       <div class="col-sm-4">
         <input type="text" class="form-control" id="mdMediaWidth" name="mdMediaWidth" placeholder="636">
@@ -103,7 +130,7 @@
       <div class="col-sm-4">
         <input type="text" class="form-control" id="mdMediaHeight" name="mdMediaHeight" placeholder="358">
       </div>
-    </div>
+    </div> --}}
     <!-- Ends Medium MediaFile section -->
 
     <!-- Begins Small MediaFile section -->
@@ -113,6 +140,26 @@
       </div>
     </div>
     <div class="form-group row">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Width</span>
+          </div>
+          <input type="text" class="form-control" id="smMediaWidth" name="smMediaWidth" placeholder="216" aria-label="Width" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Height</span>
+          </div>
+          <input type="text" class="form-control" id="smMediaHeight" name="smMediaHeight" placeholder="122" aria-label="Height" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+    </div>
+
+{{!-- 
+    <div class="form-group row">
       <label for="smMediaWidth" class="col-sm-2 col-form-label">Width</label>
       <div class="col-sm-4">
         <input type="text" class="form-control" id="smMediaWidth" name="smMediaWidth" placeholder="216">
@@ -121,7 +168,8 @@
       <div class="col-sm-4">
         <input type="text" class="form-control" id="smMediaHeight" name="smMediaHeight" placeholder="122">
       </div>
-    </div>
+    </div> --}}
+
     <!-- Ends Small MediaFile section -->
 
     <!-- Begins Tiny MediaFile section -->
@@ -131,6 +179,25 @@
       </div>
     </div>
     <div class="form-group row">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Width</span>
+          </div>
+          <input type="text" class="form-control" id="xsMediaWidth" name="xsMediaWidth" placeholder="132" aria-label="Width" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Height</span>
+          </div>
+          <input type="text" class="form-control" id="xsMediaHeight" name="xsMediaHeight" placeholder="74" aria-label="Height" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+    </div>
+
+    {{!-- <div class="form-group row">
       <label for="xsMediaWidth" class="col-sm-2 col-form-label">Width</label>
       <div class="col-sm-4">
         <input type="text" class="form-control" id="xsMediaWidth" name="xsMediaWidth" placeholder="132">
@@ -139,7 +206,8 @@
       <div class="col-sm-4">
         <input type="text" class="form-control" id="xsMediaHeight" name="xsMediaHeight" placeholder="74">
       </div>
-    </div>
+    </div> --}}
+
     <!-- Ends Tiny MediaFile section -->
 
     {{!-- TODO: Tiny MediaFile: typically 132x74 --}}
