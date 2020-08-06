@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const router = express.Router();
-const { getObject, listObjects, deleteObject } = require("../services/s3");
+const { getObject, listObjects, deleteObject } = require("../controller/controller");
 // -------------------------------------------------------------------- //
 /* GET req to get single object in S3 via key specified thru params     */
 // -------------------------------------------------------------------- //

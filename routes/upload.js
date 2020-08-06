@@ -5,7 +5,7 @@ const upload = require("../config/upload-config");
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
-const { uploadFile } = require("../services/s3");
+const { uploadFile } = require("../controller/controller");
 const { mimeToExt } = require("../utils/utils");
 // -------------------------------------------------------------------- //
 /* POST request to upload images for processing via sharp library       */
