@@ -5,7 +5,7 @@ const { getObject, listObjects, deleteObject } = require("../services/s3");
 // -------------------------------------------------------------------- //
 /* GET req to get single object in S3 via key specified thru params     */
 // -------------------------------------------------------------------- //
-router.get("/object/:yyyy/:mm/:dd/:key", getObject);
+router.get("/object/:yyyy/:mm/:dd/:filename", getObject);
 
 // -------------------------------------------------------------------- //
 /* GET req to list objects in S3 bucket via date specified thru params  */

@@ -11,14 +11,15 @@ const s3 = new AWS.S3({
 
 module.exports = {
   getObject: async (req, res, next) => {
-    const { yyyy, mm, dd, key } = req.params;
-    const Key = `${yyyy}\/${mm}\/${dd}\/${key}`;
+    const { yyyy, mm, dd, filename } = req.params;
+    const Key = `${yyyy}\/${mm}\/${dd}\/${filename}`;
+
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: Key,
+    };
 
     try {
-      const params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: Key,
-      };
       s3.getObject(params, (err, data) => {
         if (err) {
           console.log(err, err.stack);
