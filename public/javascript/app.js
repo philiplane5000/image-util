@@ -1,5 +1,11 @@
 $(document).ready(() => {
   // ***begins********* ASPECT-RATIO-LOCK FUNCTIONALITY *************** //
+  let calcHeight = (width, ratio = "16:9") => {
+    let aspectWidth = ratio.split(":")[0]; /* (eg) '16' */
+    let aspectHeight = ratio.split(":")[1]; /* (eg) '9' */
+    return Math.round((width / aspectWidth) * aspectHeight);
+  };
+
   let lockAspectRatio = (e) => {
     let $checked = $(e.target);
     const AR = $checked.val();
@@ -30,50 +36,13 @@ $(document).ready(() => {
     $('[name$="Height"]').removeAttr("disabled");
     // $('[name$="Height"]').val("");
   };
-  
-  let calcHeight = (width, ratio = "16:9") => {
-    let aspectWidth = ratio.split(":")[0]; /* (eg) '16' */
-    let aspectHeight = ratio.split(":")[1]; /* (eg) '9' */
-    return Math.round((width / aspectWidth) * aspectHeight);
-  };
   // ***ends*********** ASPECT-RATIO-LOCK FUNCTIONALITY *************** //
 
   // ***begins********* UPLOAD DATA FUNCTIONALITY ********************* //
-  let uploadToS3 = (e) => {
-    e.preventDefault();
-    // get the image filename and any other pertinent metadata
-    const uploads = [];
-    const imageResultItems = $('.image-result-item');
-
-    $.each(imageResultItems, (i, result) => {  
-      const imgData = {
-        filename: $(result).data('filename'),
-        format: $(result).data('format'),
-        size: $(result).data('size')
-      }
-      uploads.push(imgData);
-    })
-
-    console.log('uploads: ', JSON.stringify(uploads));
-
-    $.ajax({
-      url: "/upload/s3",
-      type: "POST",
-      data: JSON.stringify({ Uploads: uploads}),
-      // dataType: 'json',
-      contentType: 'application/json',
-      success: renderMetadata,
-      error: function (err) {
-        console.log('err: ', err)
-      }
-      // context: document.body
-    })
-    // POST image metadata to /upload route via request body
-
-  }
-
   let renderMetadata = (metadata) => {
+    $('#loader-gif').addClass('d-none');
     $('#s3-results-section').removeClass('d-none');
+
     for (data of metadata) {
       const {Bucket, ETag, Key, Location, key} = data;
 
@@ -114,6 +83,44 @@ $(document).ready(() => {
 
 
   }
+
+  let uploadToS3 = (e) => {
+    e.preventDefault();
+    // get the image filename and any other pertinent metadata
+    $('#loader-gif').removeClass('d-none');
+    $('#sharp-results-section').addClass('d-none');
+
+    const uploads = [];
+    const imageResultItems = $('.image-result-item');
+
+    $.each(imageResultItems, (i, result) => {  
+      const imgData = {
+        filename: $(result).data('filename'),
+        format: $(result).data('format'),
+        size: $(result).data('size')
+      }
+      uploads.push(imgData);
+    })
+
+    console.log('uploads: ', JSON.stringify(uploads));
+
+    $.ajax({
+      url: "/upload/s3",
+      type: "POST",
+      data: JSON.stringify({ Uploads: uploads}),
+      // dataType: 'json',
+      contentType: 'application/json',
+      success: renderMetadata,
+      error: function (err) {
+        console.log('err: ', err)
+      }
+      // context: document.body
+    })
+    // POST image metadata to /upload route via request body
+
+  }
+
+
   // ***ends*********** UPLOAD DATA FUNCTIONALITY ********************* //
 
   // ***begins********* MANAGE-S3 FUNCTIONALITY *********************** //
@@ -150,12 +157,12 @@ $(document).ready(() => {
   let listObjectsS3 = (e) => {
     e.preventDefault();
 
-    let prefix = $('[name="prefix"]').val();
+    let date = $('[name="date"]').val();
     $('.s3-result-cards').html('');
     $('#loader-gif').removeClass('d-none');
 
     $.ajax({
-      url: `/api/list/${prefix}`,
+      url: `/api/list/${date}`,
       type: "GET",
       success: renderObjects,
       error: function (err) {
@@ -166,12 +173,20 @@ $(document).ready(() => {
 
   let deleteObjectS3 = (e) => {
     e.preventDefault();
+    let $parentCard = $(e.target).closest('.card');
+    let $imgTop = $parentCard.find('.card-img-top');
+    $imgTop.css({"filter": "grayscale()"});
+    $parentCard.addClass('fade-out');
+    // console.log(`parent: ${$parentCard}, imgTop: ${$imgTop}`)
+    // .css({"background-color": "yellow", "font-size": "200%"})
     let key = $(e.target).data('key');
+    console.log('[S3] key: ', key);
     $.ajax({
-      url: `/api/object/${key}`,
+      url: `/api/object?key=${key}`,
       type: "DELETE",
       success: function(data) {
         // TODO: maybe add some kind of overlay instead of removing card entirely
+        console.log('data.length: ', data.length);
         $(e.target).closest('.card').remove()
       },
       error: function (err) {

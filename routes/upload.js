@@ -25,6 +25,7 @@ router.post("/sharp", upload.single("originalImg"), async (req, res, next) => {
     const xsMediaPath = path.resolve(destination, xsMediaFileName);
     const promises = [];
 
+    // TODO: Change parameters to single options object with 'width' and 'height' specified
     promises.push(
       sharp(req.file.path)
         .resize(parseInt(lgMediaWidth, 10), parseInt(lgMediaHeight, 10), { fit: imageFit.toLowerCase() })
@@ -96,15 +97,16 @@ router.post("/s3", async (req, res, next) => {
     const promises = [];
 
     for (img of imgsToUpload) {
-      let { filename, format, size } = img;
-      
+      let { filename, format, size } = img, s3FilePath = '';
       const pathToImg = path.format({
         dir: "./uploads",
         base: filename,
       });
+      // Convert underscores in source filename to backslashes for S3
+      s3FilePath = filename.replace(/_/g, '/');
       
       promises.push(
-        uploadFile(process.env.AWS_BUCKET_NAME, pathToImg, filename)
+        uploadFile(process.env.AWS_BUCKET_NAME, pathToImg, s3FilePath)
       );
     }
 

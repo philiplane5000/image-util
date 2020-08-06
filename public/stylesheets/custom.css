@@ -67,4 +67,9 @@
 a.card-link-delete {
   color: #dc3545;
 }
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
 /* ***ends********************** */
