@@ -1,4 +1,5 @@
 $(document).ready(() => {
+
   // ***begins********* ASPECT-RATIO-LOCK FUNCTIONALITY *************** //
   let calcHeight = (width, ratio = "16:9") => {
     let aspectWidth = ratio.split(":")[0]; /* (eg) '16' */
@@ -119,8 +120,6 @@ $(document).ready(() => {
     // POST image metadata to /upload route via request body
 
   }
-
-
   // ***ends*********** UPLOAD DATA FUNCTIONALITY ********************* //
 
   // ***begins********* MANAGE-S3 FUNCTIONALITY *********************** //
@@ -156,17 +155,20 @@ $(document).ready(() => {
   
   let listObjectsS3 = (e) => {
     e.preventDefault();
+    const date = $('[name="date"]').val().split('-');
+    const yyyy = date[0];
+    const mm = date[1];
+    const dd = date[2];
 
-    let date = $('[name="date"]').val();
     $('.s3-result-cards').html('');
     $('#loader-gif').removeClass('d-none');
 
     $.ajax({
-      url: `/api/list/${date}`,
+      url: `/api/list/${yyyy}/${mm}/${dd}`,
       type: "GET",
       success: renderObjects,
       error: function (err) {
-        console.log('err: ', err)
+        console.log('err: ', err);
       }      
     })
   }
@@ -175,19 +177,18 @@ $(document).ready(() => {
     e.preventDefault();
     let $parentCard = $(e.target).closest('.card');
     let $imgTop = $parentCard.find('.card-img-top');
-    $imgTop.css({"filter": "grayscale()"});
-    $parentCard.addClass('fade-out');
-    // console.log(`parent: ${$parentCard}, imgTop: ${$imgTop}`)
-    // .css({"background-color": "yellow", "font-size": "200%"})
+
     let key = $(e.target).data('key');
     console.log('[S3] key: ', key);
     $.ajax({
       url: `/api/object?key=${key}`,
       type: "DELETE",
       success: function(data) {
-        // TODO: maybe add some kind of overlay instead of removing card entirely
-        console.log('data.length: ', data.length);
-        $(e.target).closest('.card').remove()
+        $imgTop.css({"filter": "grayscale()"});
+        $parentCard.addClass('fade-out');
+        setTimeout(()=> {
+          $(e.target).closest('.card').remove()
+        }, 500)
       },
       error: function (err) {
         alert('ERROR: ', err);
