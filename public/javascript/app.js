@@ -1,5 +1,4 @@
 $(document).ready(() => {
-
   // ***begins********* ASPECT-RATIO-LOCK FUNCTIONALITY *************** //
   let calcHeight = (width, ratio = "16:9") => {
     let aspectWidth = ratio.split(":")[0]; /* (eg) '16' */
@@ -12,7 +11,7 @@ $(document).ready(() => {
     const AR = $checked.val();
     // DISABLE all height inputs
     $('[name$="Height"]').attr("disabled", "disabled");
-  
+
     $('[name$="Width"]').each((i, el) => {
       // UPDATE all height values according to newly:checked aspect ratio
       let currentWidth = $(el).val();
@@ -20,19 +19,22 @@ $(document).ready(() => {
       //  (^) take the EXISTING val() of width, apply calcHeight fn to determine height
       $(el).closest(".form-group").find('[name$="Height"]').val(height);
       //  (^) reset/update each of the nearest height input values according to new AR
-  
+
       // ASSIGN new event listener to each width input for keyup which will,
       $(el).keyup((e) => {
         let $inputTarget = $(e.target);
         let newWidth = $inputTarget.val();
         let height = calcHeight(newWidth, AR);
         //  (^) take the NEW val() of width, apply calcHeight fn to determine height
-        $inputTarget.closest(".form-group").find('[name$="Height"]').val(height);
+        $inputTarget
+          .closest(".form-group")
+          .find('[name$="Height"]')
+          .val(height);
         //  (^) set the height value on the nearest [name*=Height] input
       });
     });
   };
-  
+
   let unlockAspectRatio = (e) => {
     $('[name$="Height"]').removeAttr("disabled");
     // $('[name$="Height"]').val("");
@@ -41,11 +43,11 @@ $(document).ready(() => {
 
   // ***begins********* UPLOAD DATA FUNCTIONALITY ********************* //
   let renderMetadata = (metadata) => {
-    $('#loader-gif').addClass('d-none');
-    $('#s3-results-section').removeClass('d-none');
+    $("#loader-gif").addClass("d-none");
+    $("#s3-results-section").removeClass("d-none");
 
     for (data of metadata) {
-      const {Bucket, ETag, Key, Location, key} = data;
+      const { Bucket, ETag, Key, Location, key } = data;
 
       const $s3Data = $(`
       <div class="col-sm-6 s3-result-card">
@@ -76,59 +78,56 @@ $(document).ready(() => {
           </li>
         </ul>
       </div>
-      `)
-  
-      $('#s3-results-section').append($s3Data)
-      $('#upload-form').hide()
+      `);
+
+      $("#s3-results-section").append($s3Data);
+      $("#upload-form").hide();
     }
-
-
-  }
+  };
 
   let uploadToS3 = (e) => {
     e.preventDefault();
     // get the image filename and any other pertinent metadata
-    $('#loader-gif').removeClass('d-none');
-    $('#sharp-results-section').addClass('d-none');
+    $("#loader-gif").removeClass("d-none");
+    $("#sharp-results-section").addClass("d-none");
 
     const uploads = [];
-    const imageResultItems = $('.image-result-item');
+    const imageResultItems = $(".image-result-item");
 
-    $.each(imageResultItems, (i, result) => {  
+    $.each(imageResultItems, (i, result) => {
       const imgData = {
-        filename: $(result).data('filename'),
-        format: $(result).data('format'),
-        size: $(result).data('size')
-      }
+        filename: $(result).data("filename"),
+        format: $(result).data("format"),
+        size: $(result).data("size"),
+      };
       uploads.push(imgData);
-    })
+    });
 
-    console.log('uploads: ', JSON.stringify(uploads));
+    console.log("uploads: ", JSON.stringify(uploads));
 
     $.ajax({
       url: "/upload/s3",
       type: "POST",
-      data: JSON.stringify({ Uploads: uploads}),
+      data: JSON.stringify({ Uploads: uploads }),
       // dataType: 'json',
-      contentType: 'application/json',
+      contentType: "application/json",
       success: renderMetadata,
       error: function (err) {
-        console.log('err: ', err)
-      }
+        console.log("err: ", err);
+      },
       // context: document.body
-    })
+    });
     // POST image metadata to /upload route via request body
-
-  }
+  };
   // ***ends*********** UPLOAD DATA FUNCTIONALITY ********************* //
 
   // ***begins********* MANAGE-S3 FUNCTIONALITY *********************** //
   let renderObjects = (data) => {
-    $('#loader-gif').addClass('d-none');
-    data.Contents.forEach(obj => {
+    $("#loader-gif").addClass("d-none");
+    data.Contents.forEach((obj) => {
       let { Key, LastModified, ETag, Size, StorageClass } = obj;
       let imgSrc = `https://image-upload-util.s3.us-west-1.amazonaws.com/${Key}`;
-  
+
       let card = `
         <div class="col-sm-3 mb-3 mt-3">
           <div class="card">
@@ -146,83 +145,79 @@ $(document).ready(() => {
             </div>
           </div>
         </div>
-      `
-  
-      $('.s3-result-cards').append(card);
-  
-    })
-  }
-  
+      `;
+
+      $(".s3-result-cards").append(card);
+    });
+  };
+
   let listObjectsS3 = (e) => {
     e.preventDefault();
-    const date = $('[name="date"]').val().split('-');
+    const date = $('[name="date"]').val().split("-");
     const yyyy = date[0];
     const mm = date[1];
     const dd = date[2];
 
-    $('.s3-result-cards').html('');
-    $('#loader-gif').removeClass('d-none');
+    $(".s3-result-cards").html("");
+    $("#loader-gif").removeClass("d-none");
 
     $.ajax({
       url: `/api/list/${yyyy}/${mm}/${dd}`,
       type: "GET",
       success: renderObjects,
       error: function (err) {
-        console.log('err: ', err);
-      }      
-    })
-  }
+        console.log("err: ", err);
+      },
+    });
+  };
 
   let deleteObjectS3 = (e) => {
     e.preventDefault();
-    let $parentCard = $(e.target).closest('.card');
-    let $imgTop = $parentCard.find('.card-img-top');
+    let $parentCard = $(e.target).closest(".card");
+    let $imgTop = $parentCard.find(".card-img-top");
+    let key = $(e.target).data("key");
 
-    let key = $(e.target).data('key');
-    console.log('[S3] key: ', key);
     $.ajax({
       url: `/api/object?key=${key}`,
       type: "DELETE",
-      success: function(data) {
-        $imgTop.css({"filter": "grayscale()"});
-        $parentCard.addClass('fade-out');
-        setTimeout(()=> {
-          $(e.target).closest('.card').remove()
-        }, 500)
+      success: function (data) {
+        $imgTop.css({ filter: "grayscale()" });
+        $parentCard.addClass("fade-out");
+        setTimeout(() => {
+          $(e.target).closest(".card").remove();
+        }, 500);
       },
       error: function (err) {
-        alert('ERROR: ', err);
-      }      
-    })    
-  }
+        alert("ERROR: ", err);
+      },
+    });
+  };
   // ***end************ MANAGE-S3 FUNCTIONALITY *********************** //
 
   // ASSIGN aspect ratio lock event listeners
-  $('[name="aspect-lock"]').change(function (e) {
-    if ($(this).is(":checked")) {
-      if ($(this).val() !== "0") {
+  $('[name="aspect-lock"]').change((e) => {
+    if ($(e.target).is(":checked")) {
+      if ($(e.target).val() !== "0") {
         lockAspectRatio(e);
       } else {
         unlockAspectRatio(e);
       }
-      console.log($(this).val());
     }
   });
 
   // RE-ENABLE all disabled height inputs frozen
-  $('#sharp-form').bind('submit', function(e) {
-    $(':disabled').each(function(e) {
-        $(this).removeAttr('disabled');
-    })
-  })
+  $("#sharp-form").bind("submit", (e) => {
+    $(":disabled").each((i, element) => {
+      $(element).removeAttr("disabled");
+    });
+  });
 
   // UPLOAD resized images to S3 bucket
-  $('#upload-form').bind('submit', uploadToS3);
+  $("#upload-form").bind("submit", uploadToS3);
 
   // BIND S3 listObjects method and render results on success
-  $("#manage-form").bind('submit', listObjectsS3)
+  $("#manage-form").bind("submit", listObjectsS3);
 
   // DELETE object/image from S3 bucket
-  $('.s3-result-cards').on('click', '.card-link-delete', deleteObjectS3)
-
+  $(".s3-result-cards").on("click", ".card-link-delete", deleteObjectS3);
 });
