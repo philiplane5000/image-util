@@ -48,40 +48,40 @@ $(document).ready(() => {
 
     for (data of metadata) {
       const { Bucket, ETag, Key, Location, key } = data;
-
       const $s3Data = $(`
-      <div class="col-sm-6 s3-result-card">
-        <a 
-          href="${Location}"
-          data-bucket="${Bucket}"
-          data-etag="${ETag}"
-          data-location="${Location}"
-          data-key="${key}"
-          target="_blank"
-          class="list-group-item list-group-item-success list-group-item-action s3-result-item"
-          style="text-transform: uppercase; font-size:20px;"
-        >
-          Success: <img src="/icons/box-arrow-up-right.svg" alt="external-link">
-        </a>
-        <ul class="list-group">
-          <li class="list-group-item list-group-item-light">
-            ETag: ${ETag}
-          </li>
-          <li class="list-group-item list-group-item-light">
-            Bucket: ${Bucket}
-          </li>
-          <li class="list-group-item list-group-item-light">
-            Key: ${key}
-          </li>
-          <li class="list-group-item list-group-item-light">
-            Location: ${Location}
-          </li>
-        </ul>
-      </div>
+        <div class="col-sm-6 s3-result-card">
+          <a 
+            href="${Location}"
+            data-bucket="${Bucket}"
+            data-etag="${ETag}"
+            data-location="${Location}"
+            data-key="${key}"
+            target="_blank"
+            class="list-group-item list-group-item-success list-group-item-action s3-result-item"
+            style="text-transform: uppercase; font-size:20px;"
+          >
+            Success: <img src="/icons/box-arrow-up-right.svg" alt="external-link">
+          </a>
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-light">
+              ETag: ${ETag}
+            </li>
+            <li class="list-group-item list-group-item-light">
+              Bucket: ${Bucket}
+            </li>
+            <li class="list-group-item list-group-item-light">
+              Key: ${key}
+            </li>
+            <li class="list-group-item list-group-item-light">
+              Location: ${Location}
+            </li>
+          </ul>
+        </div>
       `);
 
       $("#s3-results-section").append($s3Data);
-      $("#upload-form").hide();
+      $("#upload-submit").hide();
+      $("#upload-manage").removeClass('d-none');
     }
   };
 
