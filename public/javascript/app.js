@@ -42,6 +42,11 @@ $(document).ready(() => {
   // ***ends*********** ASPECT-RATIO-LOCK FUNCTIONALITY *************** //
 
   // ***begins********* UPLOAD DATA FUNCTIONALITY ********************* //
+  let updateLabel = (e) => {
+    let fileName = $(e.target).val();
+    $(e.target).next('.custom-file-label').html(fileName);
+  }
+
   let renderMetadata = (metadata) => {
     $("#loader-gif").addClass("d-none");
     $("#s3-results-section").removeClass("d-none");
@@ -49,7 +54,7 @@ $(document).ready(() => {
     for (data of metadata) {
       const { Bucket, ETag, Key, Location, key } = data;
       const $s3Data = $(`
-        <div class="col-sm-6 s3-result-card">
+        <div class="col-sm-6 s3-result-card mb-2">
           <a 
             href="${Location}"
             data-bucket="${Bucket}"
@@ -81,7 +86,7 @@ $(document).ready(() => {
 
       $("#s3-results-section").append($s3Data);
       $("#upload-submit").hide();
-      $("#upload-manage").removeClass('d-none');
+      $("#upload-manage").removeClass("d-none");
     }
   };
 
@@ -124,31 +129,39 @@ $(document).ready(() => {
   // ***begins********* MANAGE-S3 FUNCTIONALITY *********************** //
   let renderObjects = (data) => {
     $("#loader-gif").addClass("d-none");
-    data.Contents.forEach((obj) => {
-      let { Key, LastModified, ETag, Size, StorageClass } = obj;
-      let imgSrc = `https://image-upload-util.s3.us-west-1.amazonaws.com/${Key}`;
+    $("#loader-gif").addClass("d-none");
+    $("#no-results-msg").addClass("d-none");
 
-      let card = `
-        <div class="col-sm-3 mb-3 mt-3">
-          <div class="card">
-            <img class="card-img-top" src="${imgSrc}" alt="${Key}">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item"><strong>Key:</strong> ${Key}</li>
-              <li class="list-group-item"><strong>Size:</strong> ${Size}</li>
-              <li class="list-group-item"><strong>LastModified:</strong> ${LastModified}</li>
-              <li class="list-group-item"><strong>StorageClass:</strong> ${StorageClass}</li>
-              <!-- <li class="list-group-item"><strong>ETag:<strong> ${ETag}</li> -->
-            </ul>
-            <div class="card-body d-flex justify-content-between align-items-center">
-            <a href="${imgSrc}" class="card-link">Download</a>
-            <a href="#" class="card-link card-link-delete" data-key="${Key}" data-tag=${ETag}>Delete</a>
+    if (data.Contents.length > 0) {
+      data.Contents.forEach((obj) => {
+        console.log("obj :>> ", obj);
+        let { Key, LastModified, ETag, Size, StorageClass } = obj;
+        let imgSrc = `https://image-upload-util.s3.us-west-1.amazonaws.com/${Key}`;
+
+        let card = `
+          <div class="col-sm-3 mb-3 mt-3">
+            <div class="card">
+              <img class="card-img-top" src="${imgSrc}" alt="${Key}">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Key:</strong> ${Key}</li>
+                <li class="list-group-item"><strong>Size:</strong> ${Size}</li>
+                <li class="list-group-item"><strong>LastModified:</strong> ${LastModified}</li>
+                <li class="list-group-item"><strong>StorageClass:</strong> ${StorageClass}</li>
+                <!-- <li class="list-group-item"><strong>ETag:<strong> ${ETag}</li> -->
+              </ul>
+              <div class="card-body d-flex justify-content-between align-items-center">
+              <a href="${imgSrc}" class="card-link">Download</a>
+              <a href="#" class="card-link card-link-delete" data-key="${Key}" data-tag=${ETag}>Delete</a>
+              </div>
             </div>
           </div>
-        </div>
-      `;
+        `;
 
-      $(".s3-result-cards").append(card);
-    });
+        $(".s3-result-cards").append(card);
+      });
+    } else {
+      $("#no-results-msg").removeClass("d-none");
+    }
   };
 
   let listObjectsS3 = (e) => {
@@ -157,12 +170,16 @@ $(document).ready(() => {
     const yyyy = date[0];
     const mm = date[1];
     const dd = date[2];
+    const filename = $('[name="filename"]').val().trim();
+    const filecheck = $('[name="filecheck"]').is(":checked");
+
+    console.log("filecheck :>> ", filecheck);
 
     $(".s3-result-cards").html("");
     $("#loader-gif").removeClass("d-none");
 
     $.ajax({
-      url: `/api/list/${yyyy}/${mm}/${dd}`,
+      url: `/api/list/${yyyy}/${mm}/${dd}/${filecheck ? filename : ""}`,
       type: "GET",
       success: renderObjects,
       error: function (err) {
@@ -192,6 +209,16 @@ $(document).ready(() => {
       },
     });
   };
+
+  let resetForm = (e) => {
+    e.preventDefault();
+    $('[name="date"]').val("");
+    $('[name="filename"]').val("");
+    if ($('[name="filecheck"]').is(":checked")) {
+      $('[name="filecheck"]').prop("checked", false);
+    }
+    $(".s3-result-cards").html("");
+  }
   // ***end************ MANAGE-S3 FUNCTIONALITY *********************** //
 
   // ASSIGN aspect ratio lock event listeners
@@ -220,4 +247,13 @@ $(document).ready(() => {
 
   // DELETE object/image from S3 bucket
   $(".s3-result-cards").on("click", ".card-link-delete", deleteObjectS3);
+
+  // RESET manager search selections
+  $('[name="reset"]').on("click", resetForm);
+
+  // SHOW filename as label after user triggers via 'Browse'
+  $('#originalImg').on('change', updateLabel);
+
+
+
 });

@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">{{ title }}</h1>
+    <h1 class="display-5">{{ title }}</h1>
     {{!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> --}}
   </div>
 </div>
@@ -9,20 +9,40 @@
   <form id="manage-form" class="mt-4" name="manage-form">
     {{!-- SUBMIT BUTTON --}}
     <div class="form-group row">
-      <div class="col-sm-12">
+      <div class="col-sm-6">
         <div class="input-group input-group-lg">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-lg">Date</span>
+            <span class="input-group-text" id="inputGroup-sizing-lg"><font class="text-danger pr-1">*</font>Date</span>
           </div>
-          <input class="form-control" type="date" aria-label="Date" aria-describedby="inputGroup-sizing-lg" name="date">
+          <input class="form-control" type="date" aria-label="Date" aria-describedby="inputGroup-sizing-lg" name="date" required>
         </div>
+      </div>
+      <div class="col-sm-6">
+        {{!-- <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Filename</span>
+          </div>
+          <input class="form-control" type="text" aria-label="Filename" aria-describedby="inputGroup-sizing-lg" name="filename">
+        </div> --}}
+        <div class="input-group input-group-lg mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input type="checkbox" aria-label="Checkbox for the following text input" name="filecheck">
+            </div>
+          </div>
+          <input type="text" class="form-control" aria-label="Filename input with checkbox" placeholder="filename" name="filename">
+        </div>
+
       </div>
     </div>
     <div class="form-group row">
       <div class="col-sm-12">
         <button type="submit" class="btn btn-info mt-4" name="submit">
-          List
+          Submit
         </button>
+        <button class="btn btn-warning mt-4 ml-2" name="reset" style="color:#fff;">
+          Reset
+        </button>        
       </div>
     </div>
     {{!-- SUBMIT BUTTON --}}
@@ -40,4 +60,15 @@
   <div class="row s3-result-cards">
     {{!-- Populated with "result-cards" from S3 bucket matching 'Prefix' value passed above --}}
   </div>
+
+  <div class="row">
+    <div id="no-results-msg" class="col-sm-12 d-none" style="padding: 32px;">
+      <span class="badge badge-warning" style="font-size: 18px; color:#FFF">
+        {{!-- <i class="fa fa-info-circle" aria-hidden="true"></i> --}}
+        NO RESULTS
+        {{!-- <i class="fas fa-exclamation"></i> --}}
+      </span>
+    </div>
+  </div>
 </div>
+

@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET image upload page */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Image Uploader' });
+  res.render('index', { title: 'Upload Image' });
 });
 
 /* GET manage-dashboard page */

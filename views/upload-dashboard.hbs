@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Results Page</h1>
+    <h1 class="display-5">Results Page</h1>
     {{!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> --}}
   </div>
 </div>
@@ -9,12 +9,12 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="list-group">
-        <div id="sharp-results-section" class="row mb-4">
+        <div id="sharp-results-section" class="row">
           <div class="col-sm-12">
             <h2>Post-Processing Metadata:</h2>
           </div>          
         {{#each images}}
-          <div class="col-sm-6 sharp-result-card">
+          <div class="col-sm-6 sharp-result-card mb-2">
               <a
                 href="/uploads/{{filename}}"
                 data-format="{{format}}"
@@ -67,7 +67,7 @@
       <div class="list-group">
         <div id="s3-results-section" class="row mb-4 d-none">
           <div class="col-sm-12">
-            <h2>S3 Upload Response Metadata:</h2>
+            <h2>S3 Upload Metadata:</h2>
           </div>            
           {{!-- ajax success/fail response functions render metadata returned from s3 here --}}
         </div>

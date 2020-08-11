@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">{{ title }}</h1>
+    <h1 class="display-5">{{ title }}</h1>
     {{!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> --}}
   </div>
 </div>
@@ -8,69 +8,83 @@
 <div class="container-fluid">
   <form id="sharp-form" action="/upload/sharp" method="post" enctype="multipart/form-data">
     <!-- Begins upload original image section -->
-    <div class="form-group row">
+    {{!-- <div class="form-group row">
       <div class="col-sm-12">
         <label for="originalImg" class="heading-label">Original Image (16:9)</label>
       </div>
       <div class="col-sm-12">
         <input class="btn btn-info" type="file" name="originalImg" id="originalImg" />
       </div>
+    </div> --}}
+    <div class="form-group row">
+      {{!-- <div class="col-sm-12 col-md-2">
+        <label for="originalImg" class="heading-label">Original Image</label>
+      </div>       --}}
+      <div class="col-sm-12 col-md-6">
+        <div class="custom-file mb-4">
+          <input type="file" class="custom-file-input" id="originalImg" name="originalImg">
+          <label class="custom-file-label" for="originalImg">Choose file</label>
+        </div>
+      </div>
+      {{!-- Begins 'fit' select --}}
+      <div class="col-sm-12 col-md-6">
+        <select id="imageFit" class="custom-select custom-select-md"  name="imageFit">
+          <option value="Cover">Select Fit</option>
+          <option value="Cover">Cover</option>
+          <option value="Contain">Contain</option>
+          <option value="Fill">Fill</option>
+          <option value="Inside">Inside</option>
+          <option value="Outside">Outside</option>          
+        </select>        
+      </div>
+      {{!-- Ends 'fit' select --}}      
     </div>
     <!-- Ends upload original image section -->
-    <!-- Begins Aspect Ratio section -->
+    <hr>
+
     <div class="form-group row">
-      <div class="col-sm-12">
-        <label class="heading-label">Lock Aspect Ratio</label>
-      </div>        
-      <div class="col-sm-12">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="aspect-lock" id="none" value="0" checked>
-          <label class="form-check-label" for="none">
-            No Lock
-          </label>
-        </div>        
-        <div class="form-check disabled">
-          <input class="form-check-input" type="radio" name="aspect-lock" id="aspect16" value="16:9">
-          <label class="form-check-label" for="aspect16">
-            [16:9]
-          </label>
-        </div>
-        <div class="form-check disabled">
-          <input class="form-check-input" type="radio" name="aspect-lock" id="aspect4" value="4:3">
-          <label class="form-check-label" for="aspect4">
-            [4:3]
-          </label>
-        </div>
+      <div class="col-sm-12 col-md-6">
+        <!-- Begins Aspect Ratio checkbox -->
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <label class="heading-label">Lock Aspect Ratio</label>
+          </div>        
+          <div class="col-sm-12">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="aspect-lock" id="none" value="0" checked>
+              <label class="form-check-label" for="none">
+                No Lock
+              </label>
+            </div>        
+            <div class="form-check disabled">
+              <input class="form-check-input" type="radio" name="aspect-lock" id="aspect16" value="16:9">
+              <label class="form-check-label" for="aspect16">
+                [16:9]
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <input class="form-check-input" type="radio" name="aspect-lock" id="aspect4" value="4:3">
+              <label class="form-check-label" for="aspect4">
+                [4:3]
+              </label>
+            </div>
 
-        <div class="form-check disabled">
-          <input class="form-check-input" type="radio" name="aspect-lock" id="aspect3" value="3:2">
-          <label class="form-check-label" for="aspect3">
-            [3:2]
-          </label>
-        </div>
+            <div class="form-check disabled">
+              <input class="form-check-input" type="radio" name="aspect-lock" id="aspect3" value="3:2">
+              <label class="form-check-label" for="aspect3">
+                [3:2]
+              </label>
+            </div>
 
+          </div>
+        </div>
+        <!-- Ends Aspect Ratio checkbox -->
       </div>
     </div>
-    <!-- Ends Aspect Ratio section -->
 
-    {{!-- Begins 'fit' selection --}}
-    <div class="form-group row">
-      <div class="col-sm-1">
-        <label class="heading-label" for="imageFit">Fit:</label>
-      </div>
-      <div class="col-sm-5">
-        <select class="form-control" id="imageFit" name="imageFit">
-          <option>Cover</option>
-          <option>Contain</option>
-          <option>Fill</option>
-          <option>Inside</option>
-          <option>Outside</option>
-        </select>
-      </div>
-    </div>
-    {{!-- Ends 'fit' selection --}}
+    <hr>
 
-    <!-- Begins Large MediaFile section -->
+    <!-- Begins Large MediaFile dimensions -->
     <div class="form-group row">
       <div class="col-sm-12">
         <label class="heading-label">Large Media-File:</label>
@@ -94,9 +108,9 @@
         </div>
       </div>
     </div>
-    <!-- Ends Large MediaFile section -->
+    <!-- Ends Large MediaFile dimensions -->
 
-    <!-- Begins Medium MediaFile section -->
+    <!-- Begins Medium MediaFile dimensions -->
     <div class="form-group row">
       <div class="col-sm-12">
         <label class="heading-label">Medium Media-File:</label>
@@ -120,20 +134,9 @@
         </div>
       </div>
     </div>
+    <!-- Ends Medium MediaFile dimensions -->
 
-    {{!-- <div class="form-group row">
-      <label for="mdMediaWidth" class="col-sm-2 col-form-label">Width</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="mdMediaWidth" name="mdMediaWidth" placeholder="636">
-      </div>
-      <label for="mdMediaHeight" class="col-sm-2 col-form-label">Height</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="mdMediaHeight" name="mdMediaHeight" placeholder="358">
-      </div>
-    </div> --}}
-    <!-- Ends Medium MediaFile section -->
-
-    <!-- Begins Small MediaFile section -->
+    <!-- Begins Small MediaFile dimensions -->
     <div class="form-group row">
       <div class="col-sm-12">
         <label class="heading-label">Small Media-File:</label>
@@ -157,22 +160,9 @@
         </div>
       </div>
     </div>
+    <!-- Ends Small MediaFile dimensions -->
 
-{{!-- 
-    <div class="form-group row">
-      <label for="smMediaWidth" class="col-sm-2 col-form-label">Width</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="smMediaWidth" name="smMediaWidth" placeholder="216">
-      </div>
-      <label for="smMediaHeight" class="col-sm-2 col-form-label">Height</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="smMediaHeight" name="smMediaHeight" placeholder="122">
-      </div>
-    </div> --}}
-
-    <!-- Ends Small MediaFile section -->
-
-    <!-- Begins Tiny MediaFile section -->
+    <!-- Begins Tiny MediaFile dimensions -->
     <div class="form-group row">
       <div class="col-sm-12">
         <label class="heading-label">Tiny Media-File:</label>
@@ -196,28 +186,13 @@
         </div>
       </div>
     </div>
-
-    {{!-- <div class="form-group row">
-      <label for="xsMediaWidth" class="col-sm-2 col-form-label">Width</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="xsMediaWidth" name="xsMediaWidth" placeholder="132">
-      </div>
-      <label for="xsMediaHeight" class="col-sm-2 col-form-label">Height</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="xsMediaHeight" name="xsMediaHeight" placeholder="74">
-      </div>
-    </div> --}}
-
-    <!-- Ends Tiny MediaFile section -->
-
-    {{!-- TODO: Tiny MediaFile: typically 132x74 --}}
-
+    <!-- Ends Tiny MediaFile dimensions -->
 
     {{!-- SUBMIT BUTTON --}}
     <div class="form-group row">
       <div class="col-sm-12">
         <button type="submit" class="btn btn-info mt-4" name="submit">
-          Process Image/(s)
+          Submit
         </button>
       </div>
     {{!-- SUBMIT BUTTON --}}
