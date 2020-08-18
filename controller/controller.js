@@ -26,6 +26,29 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  
+  getObjectHead: async (req, res, next) => {
+    const { yyyy, mm, dd, filename } = req.params;
+    const Key = `${yyyy}\/${mm}\/${dd}\/${filename}`;
+
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: Key,
+    };
+
+    try {
+      s3.headObject(params, (err, data) => {
+        if (err) {
+          console.log(err, err.stack);
+          throw new Error("[S3] 'headObject' operation failed");
+        } else {
+          res.json(data);
+        }
+      });
+    } catch (err) {
+      res.sendStatus(400);
+    }
+  },
 
   listObjects: async (req, res, next) => {
     const { yyyy, mm, dd, filename, maxkeys } = req.params;
@@ -37,6 +60,7 @@ module.exports = {
       Bucket: process.env.AWS_BUCKET_NAME,
       MaxKeys: maxkeys ? maxkeys : 400,
       Prefix: prefix,
+      EncodingType: 'url',
     };
 
     try {

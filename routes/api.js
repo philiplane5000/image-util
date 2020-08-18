@@ -1,11 +1,16 @@
 require("dotenv").config();
 const express = require("express");
 const router = express.Router();
-const { getObject, listObjects, deleteObject } = require("../controller/controller");
+const { getObject, getObjectHead, listObjects, deleteObject } = require("../controller/controller");
 // -------------------------------------------------------------------- //
-/* GET req to get single object in S3 via key specified thru params     */
+/* GET req to get single object in S3 via prefix                        */
 // -------------------------------------------------------------------- //
 router.get("/object/:yyyy/:mm/:dd/:filename", getObject);
+
+// -------------------------------------------------------------------- //
+/* GET req to get single object metadata in S3 via prefix               */
+// -------------------------------------------------------------------- //
+router.get("/object-head/:yyyy/:mm/:dd/:filename", getObjectHead);
 
 // -------------------------------------------------------------------- //
 /* GET req to list objects in S3 bucket via date specified thru params  */

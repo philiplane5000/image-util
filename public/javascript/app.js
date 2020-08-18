@@ -242,7 +242,7 @@ $(document).ready(() => {
   // UPLOAD resized images to S3 bucket
   $("#upload-form").bind("submit", uploadToS3);
 
-  // BIND S3 listObjects method and render results on success
+  // BIND S3 listObjects method + render results on success
   $("#manage-form").bind("submit", listObjectsS3);
 
   // DELETE object/image from S3 bucket
@@ -251,9 +251,10 @@ $(document).ready(() => {
   // RESET manager search selections
   $('[name="reset"]').on("click", resetForm);
 
+  // PRESELECT filename checkbox on manage dashboard
+  $('[name="filecheck"]').prop('checked', true);
+
   // SHOW filename as label after user triggers via 'Browse'
   $('#originalImg').on('change', updateLabel);
-
-
 
 });
