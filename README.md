@@ -33,7 +33,7 @@ image-upload-util$ npm run start
 * [Express.js](https://expressjs.com/)
 * [Bootstrap](https://getbootstrap.com/)
 * [Sharp](https://sharp.pixelplumbing.com/install/)
-* [AWS-S3](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html/)
+* [AWS-Javascript-SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html/)
 
 ###### INDEV Tasks
 * Add "size=" value to filename naming convention [TODO]
