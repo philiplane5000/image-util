@@ -4,12 +4,12 @@
 * (Coming soon...)
 
 #### App Init Description:
-* Clone this repository
+* Clone this repository.
 * Create `.env` file at application root and assign key/value pairs for AWS S3 account.
 * Install dependencies via `npm install` cmd.
   - The `npm install --unsafe-perm` flag must be used when installing as root or a sudo user.
   - The `npm install --ignore-scripts=false` flag must be used when npm has been configured to ignore installation scripts.
-* Start application via &nbsp;`npm run start`&nbsp; cmd
+* Start application via `npm run start` cmd.
 
 #### App Init Summary:
 ```
@@ -19,7 +19,7 @@ image-upload-util$ npm run start
 ```
 
 #### App Init Troubleshooting:
-* [Sharp Install](https://sharp.pixelplumbing.com/install)
+* Issues installing [Sharp](https://sharp.pixelplumbing.com/install) image processing library.
 
 #### .env
 - AWS_ACCESS_KEY_ID=
@@ -28,6 +28,12 @@ image-upload-util$ npm run start
 - AWS_BUCKET_NAME=
 - AWS_USERNAME=
 - AWS_PASSWORD=
+
+#### Technology
+* [Express.js](https://expressjs.com/)
+* [Bootstrap](https://getbootstrap.com/)
+* [Sharp](https://sharp.pixelplumbing.com/install/)
+* [AWS-S3](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html/)
 
 ###### INDEV Tasks
 * Add "size=" value to filename naming convention [TODO]
