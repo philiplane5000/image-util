@@ -40,3 +40,4 @@ image-upload-util$ npm run start
  - no special chars used by S3 filename naming convention (eg: '/' or '~')
 * On image deletion force deletion on all 4 variations [TODO]
 * Mongodb to hold key/pair or metadata for each successful s3 upload (on response) [TODO]
+* Push repo to bitbucket [DONE]
