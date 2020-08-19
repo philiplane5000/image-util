@@ -1,5 +1,8 @@
 # Misc 
 node_modules
-uploads
 .vscode
 .env
+# exclude images
+uploads/*
+# exception to the rule
+!uploads/.gitkeep 
