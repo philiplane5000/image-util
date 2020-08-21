@@ -1,6 +1,6 @@
 module.exports = {
   mimeToExt: {
-    "image/jpeg": ".jpg",
+    "image/jpeg": "jpg",
   },
   timestamp: () => {
     // TODO: Update below to moment formatted date for better accuracy
