@@ -136,7 +136,7 @@ $(document).ready(() => {
       data.Contents.forEach((obj) => {
         console.log("obj :>> ", obj);
         let { Key, LastModified, ETag, Size, StorageClass } = obj;
-        let imgSrc = `https://image-upload-util.s3.us-west-1.amazonaws.com/${Key}`;
+        let imgSrc = `https://gempeg-poc.s3.us-east-1.amazonaws.com/${Key}`;
 
         let card = `
           <div class="col-sm-3 mb-3 mt-3">
