@@ -53,6 +53,10 @@ $(document).ready(() => {
 
     for (data of metadata) {
       const { Bucket, ETag, Key, Location, key } = data;
+      let regex = /\d{4}[\/]\d{2}[\/]\d{2}[\/][^\.]+/m;
+      let match = Key.match(regex);
+      let wcsPath = match[0];
+
       const $s3Data = $(`
         <div class="col-sm-6 s3-result-card mb-2">
           <a 
@@ -69,6 +73,12 @@ $(document).ready(() => {
           </a>
           <ul class="list-group">
             <li class="list-group-item list-group-item-light">
+              <strong>S3Path:</strong> ${wcsPath}
+            </li>
+            <li class="list-group-item list-group-item-light">
+              <a href="${Location}">${Location}</a>
+            </li>            
+            <li class="list-group-item list-group-item-light">
               ETag: ${ETag}
             </li>
             <li class="list-group-item list-group-item-light">
@@ -76,9 +86,6 @@ $(document).ready(() => {
             </li>
             <li class="list-group-item list-group-item-light">
               Key: ${key}
-            </li>
-            <li class="list-group-item list-group-item-light">
-              Location: ${Location}
             </li>
           </ul>
         </div>
@@ -172,8 +179,6 @@ $(document).ready(() => {
     const dd = date[2];
     const filename = $('[name="filename"]').val().trim();
     const filecheck = $('[name="filecheck"]').is(":checked");
-
-    console.log("filecheck :>> ", filecheck);
 
     $(".s3-result-cards").html("");
     $("#loader-gif").removeClass("d-none");
