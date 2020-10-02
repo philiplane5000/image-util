@@ -26,8 +26,8 @@ image-upload-util$ npm run start
 - AWS_SECRET_ACCESS_KEY=
 - AWS_REGION=
 - AWS_BUCKET_NAME=
-- AWS_USERNAME=
-- AWS_PASSWORD=
+- AWS_USERNAME=*OPTIONAL*
+- AWS_PASSWORD=*OPTIONAL*
 
 #### Technology
 * [Express.js](https://expressjs.com/)
@@ -38,12 +38,9 @@ image-upload-util$ npm run start
 ###### INDEV Tasks
 * Add "size=" value to filename naming convention [TODO]
   - WCS_Controller will ping the api 'listObjects' route and determine variations following 'size='
-* S3_Image.xml --> remove all unneccessary fields, update controller code to ping API [TODO]
-* Add "size" picklist to templates (below GIA_Image dropzones) [TODO]
 * Validation on title/filename prior to "upload": [TODO]
- - no chinese or japanese chars
- - no alphanumeric
- - no special chars used by S3 filename naming convention (eg: '/' or '~')
+ - no chinese or japanese chars []
+ - no alphanumeric []
+ - no special chars used by S3 filename naming convention (eg: '/' or '~') []
 * On image deletion force deletion on all 4 variations [TODO]
 * Mongodb to hold key/pair or metadata for each successful s3 upload (on response) [TODO]
-* Push repo to bitbucket [DONE]
