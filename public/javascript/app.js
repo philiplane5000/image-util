@@ -53,9 +53,10 @@ $(document).ready(() => {
 
     for (data of metadata) {
       const { Bucket, ETag, Key, Location, key } = data;
-      let regex = /\d{4}[\/]\d{2}[\/]\d{2}[\/][^\.]+/m;
+      let regex = /-[\d]{2,4}x[\d]{2,4}\..+/m;
       let match = Key.match(regex);
-      let wcsPath = match[0];
+      let wcsPath = Key.slice(0, Key.indexOf(match[0]));
+      console.log('Oracle WCS ID :>> ', wcsPath);
 
       const $s3Data = $(`
         <div class="col-sm-6 s3-result-card mb-2">
@@ -73,7 +74,7 @@ $(document).ready(() => {
           </a>
           <ul class="list-group">
             <li class="list-group-item list-group-item-light">
-              <strong>S3Path:</strong> ${wcsPath}
+              <strong>Oracle WCS Identifier:</strong> ${wcsPath}
             </li>
             <li class="list-group-item list-group-item-light">
               <a href="${Location}">${Location}</a>
@@ -134,22 +135,27 @@ $(document).ready(() => {
   // ***ends*********** UPLOAD DATA FUNCTIONALITY ********************* //
 
   // ***begins********* MANAGE-S3 FUNCTIONALITY *********************** //
-  let renderObjects = (data) => {
+  let renderObjectsS3 = (data) => {
     $("#loader-gif").addClass("d-none");
     $("#loader-gif").addClass("d-none");
     $("#no-results-msg").addClass("d-none");
 
     if (data.Contents.length > 0) {
       data.Contents.forEach((obj) => {
-        console.log("obj :>> ", obj);
         let { Key, LastModified, ETag, Size, StorageClass } = obj;
+        console.log('Key :>> ', Key);
         let imgSrc = `https://gempeg-poc.s3.us-east-1.amazonaws.com/${Key}`;
+        let regex = /-[\d]{2,4}x[\d]{2,4}\..+/m;
+        let match = Key.match(regex);
+        let wcsPath = Key.slice(0, Key.indexOf(match[0]));
+        console.log('Oracle WCS ID :>> ', wcsPath);        
 
         let card = `
           <div class="col-sm-3 mb-3 mt-3">
             <div class="card">
               <img class="card-img-top" src="${imgSrc}" alt="${Key}">
               <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Oracle WCS Identifier:</strong> ${wcsPath}</li>
                 <li class="list-group-item"><strong>Key:</strong> ${Key}</li>
                 <li class="list-group-item"><strong>Size:</strong> ${Size}</li>
                 <li class="list-group-item"><strong>LastModified:</strong> ${LastModified}</li>
@@ -186,7 +192,7 @@ $(document).ready(() => {
     $.ajax({
       url: `/api/list/${yyyy}/${mm}/${dd}/${filecheck ? filename : ""}`,
       type: "GET",
-      success: renderObjects,
+      success: renderObjectsS3,
       error: function (err) {
         console.log("err: ", err);
       },
