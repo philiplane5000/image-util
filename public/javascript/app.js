@@ -52,11 +52,11 @@ $(document).ready(() => {
     $("#s3-results-section").removeClass("d-none");
 
     for (data of metadata) {
-      const { Bucket, ETag, Key, Location, key } = data;
-      let regex = /-[\d]{2,4}x[\d]{2,4}\..+/m;
-      let match = Key.match(regex);
-      let wcsPath = Key.slice(0, Key.indexOf(match[0]));
-      console.log('Oracle WCS ID :>> ', wcsPath);
+      const { Bucket, ETag, Key, Location } = data;
+      const match = /^(\d+\/\d{2}\/\d{2}\/[a-zA-Z-]+)\.(\d{2,5}x\d{2,5})\.(lg|md|sm|xs)\.(jpg|png)/.exec(Key);
+      const path = match[1]
+      const dims = match[2]
+      const size = match[3]
 
       const $s3Data = $(`
         <div class="col-sm-6 s3-result-card mb-2">
@@ -65,7 +65,7 @@ $(document).ready(() => {
             data-bucket="${Bucket}"
             data-etag="${ETag}"
             data-location="${Location}"
-            data-key="${key}"
+            data-key="${Key}"
             target="_blank"
             class="list-group-item list-group-item-success list-group-item-action s3-result-item"
             style="text-transform: uppercase; font-size:20px;"
@@ -73,21 +73,19 @@ $(document).ready(() => {
             Success: <img src="/icons/box-arrow-up-right.svg" alt="external-link">
           </a>
           <ul class="list-group">
-            <li class="list-group-item list-group-item-light">
-              <strong>Oracle WCS:</strong> ${wcsPath}
+            <li class="list-group-item">
+              <strong>S3 Path (WCS):</strong> ${path}
             </li>
-            <li class="list-group-item list-group-item-light">
-              <a href="${Location}">${Location}</a>
-            </li>            
-            <li class="list-group-item list-group-item-light">
-              ETag: ${ETag}
+            <li class="list-group-item">
+              <strong>URL:</strong> <a href="${Location}">${Location}</a>
             </li>
-            <li class="list-group-item list-group-item-light">
-              Bucket: ${Bucket}
+            <li class="list-group-item">
+              <strong>Bucket:</strong> ${Bucket}
             </li>
-            <li class="list-group-item list-group-item-light">
-              Key: ${key}
-            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><strong>Dimensions:</strong> ${dims}px</span>
+              <span>${size.toUpperCase()}</span>
+            </li>          
           </ul>
         </div>
       `);
@@ -145,26 +143,30 @@ $(document).ready(() => {
         let { Key, LastModified, ETag, Size, StorageClass } = obj;
         console.log('Key :>> ', Key);
         let imgSrc = `https://gempeg-poc.s3.us-east-1.amazonaws.com/${Key}`;
-        let regex = /-[\d]{2,4}x[\d]{2,4}\..+/m;
-        let match = Key.match(regex);
-        let wcsPath = Key.slice(0, Key.indexOf(match[0]));
-        console.log('Oracle WCS ID :>> ', wcsPath);        
+        let match = /^(\d+\/\d{2}\/\d{2}\/[a-zA-Z-]+)\.(\d{2,5}x\d{2,5})\.(lg|md|sm|xs)\.(jpg|png)/.exec(Key);
+        let path = match[1]
+        let dims = match[2]
+        let size = match[3]
 
         let card = `
           <div class="col-sm-3 mb-3 mt-3">
             <div class="card">
               <img class="card-img-top" src="${imgSrc}" alt="${Key}">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>S3 Path (WCS):</strong> ${wcsPath}</li>
-                <li class="list-group-item"><strong>Filename (S3):</strong> ${Key}</li>
-                <li class="list-group-item"><strong>Size:</strong> ${Size}</li>
-                <li class="list-group-item"><strong>LastModified:</strong> ${LastModified}</li>
-                <li class="list-group-item"><strong>StorageClass:</strong> ${StorageClass}</li>
-                <!-- <li class="list-group-item"><strong>ETag:<strong> ${ETag}</li> -->
+                <li class="list-group-item">
+                  <strong>S3 Path (WCS):</strong> ${path}
+                </li>
+                <li class="list-group-item">
+                  <strong>Dimensions:</strong> ${dims}px
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span><strong>Size:</strong> ${Size} (B)</span>
+                  <span>${size.toUpperCase()}</span>
+                </li>
               </ul>
               <div class="card-body d-flex justify-content-between align-items-center">
-              <a href="${imgSrc}" class="card-link">Download</a>
-              <a href="#" class="card-link card-link-delete" data-key="${Key}" data-tag=${ETag}>Delete</a>
+                <a href="${imgSrc}" class="card-link">Download</a>
+                <a href="#" class="card-link card-link-delete" data-key="${Key}" data-tag=${ETag}>Delete</a>
               </div>
             </div>
           </div>
