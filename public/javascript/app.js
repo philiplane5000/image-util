@@ -74,7 +74,7 @@ $(document).ready(() => {
           </a>
           <ul class="list-group">
             <li class="list-group-item list-group-item-light">
-              <strong>Oracle WCS Identifier:</strong> ${wcsPath}
+              <strong>Oracle WCS:</strong> ${wcsPath}
             </li>
             <li class="list-group-item list-group-item-light">
               <a href="${Location}">${Location}</a>
@@ -116,7 +116,7 @@ $(document).ready(() => {
       uploads.push(imgData);
     });
 
-    console.log("uploads: ", JSON.stringify(uploads));
+    console.log("uploads :>> ", JSON.stringify(uploads));
 
     $.ajax({
       url: "/upload/s3",
@@ -155,8 +155,8 @@ $(document).ready(() => {
             <div class="card">
               <img class="card-img-top" src="${imgSrc}" alt="${Key}">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Oracle WCS Identifier:</strong> ${wcsPath}</li>
-                <li class="list-group-item"><strong>Key:</strong> ${Key}</li>
+                <li class="list-group-item"><strong>S3 Path (WCS):</strong> ${wcsPath}</li>
+                <li class="list-group-item"><strong>Filename (S3):</strong> ${Key}</li>
                 <li class="list-group-item"><strong>Size:</strong> ${Size}</li>
                 <li class="list-group-item"><strong>LastModified:</strong> ${LastModified}</li>
                 <li class="list-group-item"><strong>StorageClass:</strong> ${StorageClass}</li>
