@@ -77,15 +77,16 @@ $(document).ready(() => {
               <strong>S3 Path (WCS):</strong> ${path}
             </li>
             <li class="list-group-item">
-              <strong>URL:</strong> <a href="${Location}">${Location}</a>
-            </li>
-            <li class="list-group-item">
               <strong>Bucket:</strong> ${Bucket}
             </li>
             <li class="list-group-item d-flex justify-content-between">
               <span><strong>Dimensions:</strong> ${dims}px</span>
               <span>${size.toUpperCase()}</span>
-            </li>          
+            </li>
+            <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span style="flex: 10%;"><strong>URL:</strong></span>
+              <a href="${Location}" style="font-size: 12px; flex: 90%;">${Location}</a>
+            </li> -->
           </ul>
         </div>
       `);
