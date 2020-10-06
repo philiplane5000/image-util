@@ -141,44 +141,55 @@ $(document).ready(() => {
 
     if (data.Contents.length > 0) {
       data.Contents.forEach((obj) => {
+        console.log('obj :>> ', obj);
         let { Key, LastModified, ETag, Size, StorageClass } = obj;
-        console.log('Key :>> ', Key);
         let imgSrc = `https://gempeg-poc.s3.us-east-1.amazonaws.com/${Key}`;
-        let match = /^(\d+\/\d{2}\/\d{2}\/[a-zA-Z-]+)\.(\d{2,5}x\d{2,5})\.(lg|md|sm|xs)\.(jpg|png)/.exec(Key);
-        let path = match[1]
-        let dims = match[2]
-        let size = match[3]
+        let [ input, path, dims, size, mime ] = /^(\d+\/\d{2}\/\d{2}\/[a-zA-Z-]+)\.(\d+x\d+)\.(lg|md|sm|xs)\.(jpg|png)/.exec(Key);
+        let [ original , name ] = /\d+\/\d+\/\d+\/([\w\-]+)/.exec(path);
+
+        // Remove enclosing quotation marks from ETag for HTML ease of use:
+        ETag = ETag.replace(/\"+/g, '');
+
+        size = size.toUpperCase();
 
         let card = `
           <div class="col-sm-3 mb-3 mt-3">
             <div class="card">
               <img class="card-img-top" src="${imgSrc}" alt="${Key}">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <strong>S3 Path (WCS):</strong> ${path}
+                <li class="list-group-item  d-flex justify-content-between align-items-center">
+                  <button class="btn-clipboard btn-${name}-${size}" data-clipboard-target='#${name}-${size}'>
+                    <img src="icons/add-to-clipboard.png" alt="Copy to clipboard" height="30px">
+                  </button>          
+                  <pre class="target-path" id="${name}-${size}" value="${path}">${path}</pre>                                 
                 </li>
                 <li class="list-group-item">
                   <strong>Dimensions:</strong> ${dims}px
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                   <span><strong>Size:</strong> ${Size} (B)</span>
-                  <span>${size.toUpperCase()}</span>
+                  <span>${size}</span>
                 </li>
               </ul>
               <div class="card-body d-flex justify-content-between align-items-center">
                 <a href="${imgSrc}" class="card-link">Download</a>
-                <a href="#" class="card-link card-link-delete" data-key="${Key}" data-tag=${ETag}>Delete</a>
+                <a href="#" class="card-link card-link-delete" data-key="${Key}" data-tag="${ETag}">Delete</a>
               </div>
             </div>
           </div>
         `;
 
         $(".s3-result-cards").append(card);
+        clipboard(`.btn-${name}-${size}`);
       });
     } else {
       $("#no-results-msg").removeClass("d-none");
     }
   };
+
+  let clipboard = (selector) => {
+    new ClipboardJS(selector)
+  }
 
   let listObjectsS3 = (e) => {
     e.preventDefault();

@@ -64,12 +64,23 @@
 
 /* 'manage-dashboard.hbs' styles */
 /* ***begins******************** */
-a.card-link-delete {
+.card-link-delete {
   color: #dc3545;
 }
 
 .fade-out {
   opacity: 0;
   transition: opacity 0.5s ease-out;
+}
+
+.btn-clipboard {
+  background-color: transparent !important;
+  border: none;
+  flex: 0.20;
+}
+
+.target-path {
+  flex: 90%;
+  margin: 0 10px;
 }
 /* ***ends********************** */
