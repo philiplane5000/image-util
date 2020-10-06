@@ -52,11 +52,13 @@ $(document).ready(() => {
     $("#s3-results-section").removeClass("d-none");
 
     for (data of metadata) {
-      const { Bucket, ETag, Key, Location } = data;
-      const match = /^(\d+\/\d{2}\/\d{2}\/[a-zA-Z-]+)\.(\d{2,5}x\d{2,5})\.(lg|md|sm|xs)\.(jpg|png)/.exec(Key);
-      const path = match[1]
-      const dims = match[2]
-      const size = match[3]
+      let { Bucket, ETag, Key, Location } = data;
+      let [ input, path, dims, size, mime ] = /^(\d+\/\d{2}\/\d{2}\/[a-zA-Z-]+)\.(\d+x\d+)\.(lg|md|sm|xs)\.(jpg|png)/.exec(Key);
+      let [ original , name ] = /\d+\/\d+\/\d+\/([\w\-]+)/.exec(path);
+      size = size.toUpperCase();
+
+      // Remove enclosing quotation marks from ETag for HTML ease of use:
+      ETag = ETag.replace(/\"+/g, '');
 
       const $s3Data = $(`
         <div class="col-sm-6 s3-result-card mb-2">
@@ -73,8 +75,11 @@ $(document).ready(() => {
             Success: <img src="/icons/box-arrow-up-right.svg" alt="external-link">
           </a>
           <ul class="list-group">
-            <li class="list-group-item">
-              <strong>S3 Path (WCS):</strong> ${path}
+            <li class="list-group-item  d-flex justify-content-between align-items-center">
+              <button class="btn-clipboard btn-${name}-${size}" data-clipboard-target='#${name}-${size}'>
+                <img src="../icons/add-to-clipboard.png" alt="Copy to clipboard" height="30px">              
+              </button>
+              <pre class="target-path" id="${name}-${size}" value="${path}">${path}</pre>
             </li>
             <li class="list-group-item">
               <strong>Bucket:</strong> ${Bucket}
@@ -94,6 +99,7 @@ $(document).ready(() => {
       $("#s3-results-section").append($s3Data);
       $("#upload-submit").hide();
       $("#upload-manage").removeClass("d-none");
+      clipboard(`.btn-${name}-${size}`);
     }
   };
 
@@ -132,7 +138,7 @@ $(document).ready(() => {
     // POST image metadata to /upload route via request body
   };
   // ***ends*********** UPLOAD DATA FUNCTIONALITY ********************* //
-
+  
   // ***begins********* MANAGE-S3 FUNCTIONALITY *********************** //
   let renderObjectsS3 = (data) => {
     $("#loader-gif").addClass("d-none");
@@ -141,16 +147,14 @@ $(document).ready(() => {
 
     if (data.Contents.length > 0) {
       data.Contents.forEach((obj) => {
-        console.log('obj :>> ', obj);
         let { Key, LastModified, ETag, Size, StorageClass } = obj;
         let imgSrc = `https://gempeg-poc.s3.us-east-1.amazonaws.com/${Key}`;
         let [ input, path, dims, size, mime ] = /^(\d+\/\d{2}\/\d{2}\/[a-zA-Z-]+)\.(\d+x\d+)\.(lg|md|sm|xs)\.(jpg|png)/.exec(Key);
         let [ original , name ] = /\d+\/\d+\/\d+\/([\w\-]+)/.exec(path);
+        size = size.toUpperCase();
 
         // Remove enclosing quotation marks from ETag for HTML ease of use:
         ETag = ETag.replace(/\"+/g, '');
-
-        size = size.toUpperCase();
 
         let card = `
           <div class="col-sm-3 mb-3 mt-3">
@@ -186,10 +190,6 @@ $(document).ready(() => {
       $("#no-results-msg").removeClass("d-none");
     }
   };
-
-  let clipboard = (selector) => {
-    new ClipboardJS(selector)
-  }
 
   let listObjectsS3 = (e) => {
     e.preventDefault();
@@ -245,6 +245,12 @@ $(document).ready(() => {
     $(".s3-result-cards").html("");
   }
   // ***end************ MANAGE-S3 FUNCTIONALITY *********************** //
+
+  // ***begins*********** MISC / UTILS ******************************** //
+  let clipboard = (selector) => {
+    new ClipboardJS(selector)
+  }  
+  // ***ends*********** MISC / UTILS ********************************** //  
 
   // ASSIGN aspect ratio lock event listeners
   $('[name="aspect-lock"]').change((e) => {
