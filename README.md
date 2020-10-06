@@ -36,11 +36,10 @@ image-upload-util$ npm run start
 * [AWS-Javascript-SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html/)
 
 ###### INDEV Tasks
-* Add "size=" value to filename naming convention [TODO]
-  - WCS_Controller will ping the api 'listObjects' route and determine variations following 'size='
 * Validation on title/filename prior to "upload": [TODO]
  - no chinese or japanese chars []
  - no alphanumeric []
  - no special chars used by S3 filename naming convention (eg: '/' or '~') []
 * On image deletion force deletion on all 4 variations [TODO]
 * Mongodb to hold key/pair or metadata for each successful s3 upload (on response) [TODO]
+* Clipboardjs to copy 'S3 Path' [clipboardjs](https://clipboardjs.com/)
