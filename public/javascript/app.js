@@ -1,9 +1,15 @@
 $(document).ready(() => {
+  // ***begins*********** MISC / UTILS ******************************** //
   // UNIVERSAL Regular Expression patterns:
   const regEx = {
     filepath: /^([a-zA-Z]\:[\\])?(fakepath)?(\\)?([a-zA-Z-]+)\.(jpg)$/gm,
     dimension: /^[0-9]{1,5}/gm,
   }
+  // INIT clipboardjs on selector targetting a button
+  let clipboard = (selector) => {
+    new ClipboardJS(selector)
+  }
+  // ***ends*********** MISC / UTILS ********************************** //    
   // ***begins********* ASPECT-RATIO-LOCK FUNCTIONALITY *************** //
   let calcHeight = (width, ratio = "16:9") => {
     let aspectWidth = ratio.split(":")[0]; /* (eg) '16' */
@@ -249,12 +255,6 @@ $(document).ready(() => {
   }
   // ***end************ MANAGE-S3 FUNCTIONALITY *********************** //
 
-  // ***begins*********** MISC / UTILS ******************************** //
-  let clipboard = (selector) => {
-    new ClipboardJS(selector)
-  }
-  // ***ends*********** MISC / UTILS ********************************** //  
-
   // ASSIGN aspect ratio lock event listeners
   $('[name="aspect-lock"]').change((e) => {
     if ($(e.target).is(":checked")) {
@@ -269,12 +269,12 @@ $(document).ready(() => {
   $("#sharp-form").bind("submit", (e) => {
     // BEGIN Validation
     let flag = false;
-    let filepath = $('#originalImg').val();
+    let filepath = $('#image-file').val();
     if (regEx.filepath.test(filepath)) {
       flag = true;
     } else {
       console.error('Does not adhere to filename policy :>> ', filepath);
-      $('#originalImg').focus();
+      $('#image-file').focus();
       return false      
     }
     // END Validation
@@ -303,6 +303,6 @@ $(document).ready(() => {
   $('[name="filecheck"]').prop('checked', true);
 
   // SHOW filename as label after user triggers via 'Browse'
-  $('#originalImg').on('change', updateLabel);
+  $('#image-file').on('change', updateLabel);
 
 });

@@ -10,7 +10,7 @@ const { mimeToExt } = require("../utils/utils");
 // -------------------------------------------------------------------- //
 /* POST request to upload images for processing via sharp library       */
 // -------------------------------------------------------------------- //
-router.post("/sharp", upload.single("originalImg"), async (req, res, next) => {
+router.post("/sharp", upload.single("image-file"), async (req, res, next) => {
   try {
     const { lgMediaWidth, lgMediaHeight, mdMediaWidth, mdMediaHeight, smMediaWidth, smMediaHeight, xsMediaWidth, xsMediaHeight, imageFit } = req.body;
     const { fieldname, originalname, encoding, mimetype, filename, size, destination } = req.file;
