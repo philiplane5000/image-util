@@ -126,8 +126,6 @@ $(document).ready(() => {
       uploads.push(imgData);
     });
 
-    console.log("uploads :>> ", JSON.stringify(uploads));
-
     $.ajax({
       url: "/upload/s3",
       type: "POST",
