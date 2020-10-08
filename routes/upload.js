@@ -61,14 +61,13 @@ router.post("/sharp", upload.single("image-file"), async (req, res, next) => {
     Promise.all(promises)
       .then(images => {
         images[0].filename = lgMediaFileName;
-        images[0].device = "large";
+        // images[0].device = "large";
         images[1].filename = mdMediaFileName;
-        images[1].device = "medium";
+        // images[1].device = "medium";
         images[2].filename = smMediaFileName;
-        images[2].device = "small";
+        // images[2].device = "small";
         images[3].filename = xsMediaFileName;
-        images[3].device = "tiny";
-        // res.json(images);
+        // images[3].device = "tiny";
         res.render('upload-dashboard', {images: images});
       })
       .catch(err => {

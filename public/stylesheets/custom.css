@@ -15,6 +15,10 @@
   padding-left: 2px;
   /* margin-top: 8px; */
 }
+
+.validation-error {
+  box-shadow: 2px 0 0 0 #dc3545;
+}
 /* ***ends********************** */
 
 /* global forms styles */

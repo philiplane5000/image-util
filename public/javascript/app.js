@@ -3,13 +3,14 @@ $(document).ready(() => {
   // UNIVERSAL Regular Expression patterns:
   const regEx = {
     filepath: /^([a-zA-Z]\:[\\])?(fakepath)?(\\)?([a-zA-Z-]+)\.(jpg)$/gm,
-    dimension: /^[0-9]{1,5}/gm,
+    dimension: /^\d{1,5}$/m,
   }
   // INIT clipboardjs on selector targetting a button
   let clipboard = (selector) => {
     new ClipboardJS(selector)
   }
-  // ***ends*********** MISC / UTILS ********************************** //    
+  // ***ends*********** MISC / UTILS ********************************** //
+
   // ***begins********* ASPECT-RATIO-LOCK FUNCTIONALITY *************** //
   let calcHeight = (width, ratio = "16:9") => {
     let aspectWidth = ratio.split(":")[0]; /* (eg) '16' */
@@ -244,6 +245,16 @@ $(document).ready(() => {
     });
   };
 
+  // let validate = async (pattern, selector) => {
+  //   const $element = $(selector);
+  //   const $val = $element.val().trim();
+  //   console.log('Performing validation on :>> ', `${pattern} / ${selector} / ${$val}`);
+
+  //   let result = await pattern.test($val);
+  //   return result
+
+  // }
+
   let resetForm = (e) => {
     e.preventDefault();
     $('[name="date"]').val("");
@@ -268,23 +279,88 @@ $(document).ready(() => {
 
   $("#sharp-form").bind("submit", (e) => {
     // BEGIN Validation
-    let flag = false;
-    let filepath = $('#image-file').val();
-    if (regEx.filepath.test(filepath)) {
-      flag = true;
-    } else {
-      console.error('Does not adhere to filename policy :>> ', filepath);
+    let flag = true;
+
+    const filepath = $('#image-file').val().trim();
+    if (!regEx.filepath.test(filepath)) {
+      console.error('Image filename does not conform to policy :>> ', filepath);
       $('#image-file').focus();
-      return false      
+      return false
+    }
+
+    const $lgWidth = $('#lgMediaWidth').val().trim();
+    if (!regEx.dimension.test($lgWidth)) {
+      $('#lgMediaWidth').addClass('validation-error');
+      flag = false;
+    } else {
+      $('#lgMediaWidth').removeClass('validation-error');
+    }
+
+    const $lgHeight = $('#lgMediaHeight').val().trim();
+    if (!regEx.dimension.test($lgHeight)) {
+      $('#lgMediaHeight').addClass('validation-error');
+      flag = false;
+    } else {
+      $('#lgMediaHeight').removeClass('validation-error');
+    }
+
+    const $mdWidth = $('#mdMediaWidth').val().trim();
+    if (!regEx.dimension.test($mdWidth)) {
+      $('#mdMediaWidth').addClass('validation-error');
+      flag = false;
+    } else {
+      $('#mdMediaWidth').removeClass('validation-error');
+    }
+
+    const $mdHeight = $('#mdMediaHeight').val().trim();
+    if (!regEx.dimension.test($mdHeight)) {
+      $('#mdMediaHeight').addClass('validation-error');
+      flag = false;
+    } else {
+      $('#mdMediaHeight').removeClass('validation-error');
+    }
+
+    const $smWidth = $('#smMediaWidth').val().trim();
+    if (!regEx.dimension.test($smWidth)) {
+      $('#smMediaWidth').addClass('validation-error');
+      flag = false;
+    } else {
+      $('#smMediaWidth').removeClass('validation-error');
+    }
+
+    const $smHeight = $('#smMediaHeight').val().trim();
+    if (!regEx.dimension.test($smHeight)) {
+      $('#smMediaHeight').addClass('validation-error');
+      flag = false;
+    } else {
+      $('#smMediaHeight').removeClass('validation-error');
+    }
+
+    const $xsWidth = $('#xsMediaWidth').val().trim();
+    if (!regEx.dimension.test($xsWidth)) {
+      $('#xsMediaWidth').addClass('validation-error');
+      flag = false;
+    } else {
+      $('#xsMediaWidth').removeClass('validation-error');
+    }
+
+    const $xsHeight = $('#xsMediaHeight').val().trim();
+    if (!regEx.dimension.test($xsHeight)) {
+      $('#xsMediaHeight').addClass('validation-error');
+      flag = false;
+    } else {
+      $('#xsMediaHeight').removeClass('validation-error');
     }
     // END Validation
-    
-    // RE-ENABLE all disabled height inputs frozen
-    $(":disabled").each((i, element) => {
-      $(element).removeAttr("disabled");
-    });
 
-    return flag;
+    // RE-ENABLE all disabled height inputs frozen
+    if (flag === true) {
+      $(":disabled").each((i, element) => {
+        $(element).removeAttr("disabled");
+      });
+    }
+
+    return flag
   });
 
   // UPLOAD resized images to S3 bucket
