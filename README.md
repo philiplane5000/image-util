@@ -36,7 +36,9 @@ image-upload-util$ npm run start
 * [AWS-Javascript-SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html/)
 
 ###### INDEV Tasks
-* On image deletion force deletion on all 4 variations [INDEV]
+* Remove dims from filename (eg) 1280x720 [TODO]
+* Explore adding metadata to S3 image obj [TODO]
+* On image deletion force deletion on all 4 variations [DONE]
 * Mongodb to hold key/pair or metadata for each successful s3 upload (on response) [TODO]
 * Validation on title/filename prior to "upload": [DONE]
  - no alphanumeric [DONE]
