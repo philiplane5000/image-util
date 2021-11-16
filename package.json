@@ -8,7 +8,7 @@
     "start-fresh": "rm uploads/* && node ./bin/www"
   },
   "dependencies": {
-    "aws-sdk": "^2.714.2",
+    "aws-sdk": "^2.814.0",
     "cookie-parser": "~1.4.4",
     "dayjs": "^1.9.1",
     "debug": "~2.6.9",
